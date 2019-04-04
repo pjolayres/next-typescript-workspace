@@ -1,10 +1,13 @@
 {
   "name": "create-next-example-app",
   "scripts": {
-    "dev": "next",
-    "build": "shx --silent rm -rf ./.next && next build && npm run build:server",
-    "build:server": "shx --silent rm -rf ./.server && tsc --project './tsconfig.server.json' --outDir './.server'",
-    "start": "next start"
+    "clean": "shx --silent rm -rf ./.server && shx --silent rm -rf ./.next",
+    "dev": "npm run clean && concurrently \"npm run dev:server\" \"npm run dev:start\"",
+    "dev:server": "tsc --project './tsconfig.server.json' --watch --preserveWatchOutput --outDir './.server'",
+    "dev:start": "wait-on ./.server/index.js && NODE_ENV=development nodemon --watch ./.server --inspect --verbose ./.server/index.js",
+    "build": "npm run clean && next build && npm run build:server",
+    "build:server": "tsc --project './tsconfig.server.json' --outDir './.server'",
+    "start": "NODE_ENV=production node ./.server/index.js"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
@@ -19,15 +22,17 @@
     "@types/jest": "^24.0.11",
     "@types/next": "^8.0.3",
     "@types/node": "^11.13.0",
-    "@types/react": "^16.8.10",
+    "@types/react": "^16.8.11",
     "@types/react-dom": "^16.8.3",
     "@types/styled-jsx": "^2.2.8",
+    "concurrently": "^4.1.0",
     "prettier-tslint": "^0.4.2",
     "shx": "^0.3.2",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^4.0.0",
-    "typescript": "^3.4.1"
+    "typescript": "^3.4.1",
+    "wait-on": "^3.2.0"
   }
 }
