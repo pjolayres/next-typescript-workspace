@@ -36,8 +36,8 @@ This script run in development mode as usuall. It is already configured to allow
 - [x] Nodemon-based dev server
 - [x] VS Code server debugging
 - [x] Prettier configuration
+- [x] Text localization
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
 - [ ] Server-side babel compilation
-- [ ] Text localization
 - [ ] Automatic RTL styles with postcss-rtl

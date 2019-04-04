@@ -4,7 +4,7 @@ import { Express } from 'express';
 import nextServer from 'next';
 import nextI18NextMiddleware from 'next-i18next/middleware';
 
-import localization from '../shared/localization';
+import localization from '../../shared/localization';
 import apiv1 from '../api/v1';
 import redirects from '../redirects';
 import Utilities from '../shared/utilities';
@@ -35,7 +35,9 @@ const contentConfig = (app: Express, server: nextServer.Server) => {
 
   app.get('/data/:id', (req, res) => server.render(req, res, '/data', { id: req.params.id }));
 
-  nextI18NextMiddleware(localization, server, app);
+  app.use(nextI18NextMiddleware(localization));
+
+  // nextI18NextMiddleware(localization, server, app);
 
   app.get('*', (req, res) => handle(req, res));
 

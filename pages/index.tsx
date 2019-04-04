@@ -1,16 +1,18 @@
 import React from 'react';
+import { NextFunctionComponent } from 'next';
 import Link from 'next/link';
 
-import Head from '../components/head';
-import Nav from '../components/nav';
+import Head from '../shared/components/head';
+import Nav from '../shared/components/nav';
+import { withNamespaces } from '../shared/localization';
 
-const Home: React.FunctionComponent = () => (
+const Home: NextFunctionComponent = ({ t }) => (
   <div>
     <Head title="Home" />
     <Nav />
 
     <div className="hero">
-      <h1 className="title">Welcome to Next!</h1>
+      <h1 className="title">{t('Title')}</h1>
       <p className="description">
         To get started, edit <code>pages/index.js</code> and save to reload.
       </p>
@@ -88,4 +90,8 @@ const Home: React.FunctionComponent = () => (
   </div>
 );
 
-export default Home;
+Home.getInitialProps = () => ({
+  namespacesRequired: ['common']
+});
+
+export default withNamespaces('common')(Home);

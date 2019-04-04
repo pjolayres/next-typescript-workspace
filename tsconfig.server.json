@@ -7,7 +7,11 @@
     "moduleResolution": "node",
     "noEmit": false
   },
+  "exclude": [
+    "shared/components/**/*"
+  ],
   "include": [
-    "server/**/*"
+    "server/**/*",
+    "shared/**/*"
   ]
 }
