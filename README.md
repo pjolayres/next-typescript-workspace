@@ -20,10 +20,10 @@ npm start
 This script will transpile the server using tsc and build a production bundle of the website.
 
 ## VS Code debugging
-1. `npm run dev`
+1. `npm run dev` or `npm run debug`
 2.  Open debugging panel and select `Local: Attach to Node` and press **F5**.
 
-This script run in development mode as usuall. It is already configured to allow a debugger to attach to it at any point after running by using `--inspect` in the `dev:start` npm script. However, if it is necessary to debug the server initialization, it will be necessary to change `--inspect` into `--inspect-brk` so that the server does not start execution until a debugger is attached.
+The script runs in development mode as usual. `npm run dev` uses `--inspect` which  allows the debugger to be attached after the server has initialized. `npm run debug` uses `--inspect-brk` which pauses server execution until a debugger is attached, allowing debugger to hit breakpoints in the server initialization code.
 
 ## Environment variables
 | Name | Possible values | Default | Description  |

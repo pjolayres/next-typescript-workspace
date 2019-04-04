@@ -2,14 +2,17 @@
   "name": "create-next-example-app",
   "scripts": {
     "clean": "shx --silent rm -rf ./.server && shx --silent rm -rf ./.next",
+    "debug": "npm run clean && concurrently \"npm run dev:server\" \"npm run debug:start\"",
+    "debug:start": "wait-on ./.server/server/index.js && NODE_ENV=development nodemon --watch ./.server --inspect-brk --verbose ./.server/server/index.js",
     "dev": "npm run clean && concurrently \"npm run dev:server\" \"npm run dev:start\"",
     "dev:server": "tsc --project './tsconfig.server.json' --watch --preserveWatchOutput --outDir './.server'",
     "dev:start": "wait-on ./.server/server/index.js && NODE_ENV=development nodemon --watch ./.server --inspect --verbose ./.server/server/index.js",
     "build": "npm run clean && next build && npm run build:server",
     "build:server": "tsc --project './tsconfig.server.json' --outDir './.server'",
-    "start": "NODE_ENV=production node ./.server/server/index.js",
     "lint": "tslint --project tsconfig.json && tsc && tslint --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --check **/*.ts",
-    "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --write **/*.ts"
+    "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --write **/*.ts",
+    "test": "jest",
+    "start": "NODE_ENV=production node ./.server/server/index.js"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
@@ -36,8 +39,10 @@
     "@types/styled-jsx": "^2.2.8",
     "@types/uuid": "^3.4.4",
     "concurrently": "^4.1.0",
+    "jest": "^24.7.1",
     "prettier-tslint": "^0.4.2",
     "shx": "^0.3.2",
+    "ts-jest": "^24.0.1",
     "tslint": "^5.15.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",

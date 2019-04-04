@@ -1,12 +1,13 @@
 import React from 'react';
-import { NextFunctionComponent } from 'next';
 import Link from 'next/link';
 
 import Head from '../shared/components/head';
 import Nav from '../shared/components/nav';
 import { withNamespaces } from '../shared/localization';
+import { LocalizedNextFunctionComponent } from '../types';
 
-const Home: NextFunctionComponent = ({ t }) => (
+
+const Home: LocalizedNextFunctionComponent = ({ t }) => (
   <div>
     <Head title="Home" />
     <Nav />
