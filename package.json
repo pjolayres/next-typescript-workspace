@@ -8,8 +8,8 @@
     "build": "npm run clean && next build && npm run build:server",
     "build:server": "tsc --project './tsconfig.server.json' --outDir './.server'",
     "start": "NODE_ENV=production node ./.server/index.js",
-    "lint": "tslint --project tsconfig.json && tslint --project tsconfig.server.json",
-    "lint:fix": "tslint --fix --project tsconfig.json && tslint --fix --project tsconfig.server.json"
+    "lint": "tslint --project tsconfig.json && tsc && tslint --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit",
+    "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
