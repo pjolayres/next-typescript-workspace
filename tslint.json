@@ -33,7 +33,8 @@
       "eofline": true,
       "jsx-no-lambda": [false],
       "jsx-no-multiline-js": false,
-      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+      "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+      "jsx-boolean-value": ["never"]
     },
     "rulesDirectory": [],
     "linterOptions": {

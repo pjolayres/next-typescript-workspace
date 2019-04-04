@@ -16,5 +16,10 @@
     "strict": true,
     "target": "esnext",
     "typeRoots": [ "./types", "./node_modules/@types"]
-  }
+  },
+  "include": [
+    "components/**/*",
+    "pages/**/*",
+    "types/**/*"
+  ]
 }
