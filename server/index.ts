@@ -11,13 +11,21 @@ const handle = app.getRequestHandler();
 
 console.log(`> Initializing`); // tslint:disable-line: no-console
 
+if (dev) {
+  console.log(`> Production: false`); // tslint:disable-line: no-console
+} else {
+  console.log(`> Production: true`); // tslint:disable-line: no-console
+}
+
 app.prepare().then(() => {
   const server = express();
 
-  server.get('/api/v1/data', (_req, res) => res.json({
-    status: 'Success',
-    data: new Date().toISOString()
-  }));
+  server.get('/api/v1/data', (_req, res) =>
+    res.json({
+      status: 'Success',
+      data: new Date().toISOString()
+    })
+  );
 
   server.get('/data/:id', (req, res) => app.render(req, res, '/data', { id: req.params.id }));
 

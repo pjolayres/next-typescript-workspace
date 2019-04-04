@@ -29,9 +29,9 @@ This script run in development mode as usuall. It is already configured to allow
 - [x] Typescript client and server
 - [x] Nodemon-based dev server
 - [x] VS Code server debugging
+- [x] Prettier configuration
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
-- [ ] Prettier configuration
 - [ ] Server-side babel compilation
 - [ ] Text localization
 - [ ] Automatic RTL styles with postcss-rtl
