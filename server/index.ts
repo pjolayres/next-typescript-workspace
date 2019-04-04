@@ -1,32 +1,35 @@
 import express from 'express';
-import next from 'next';
-import nextI18NextMiddleware from 'next-i18next/middleware';
+import nextServer from 'next';
 
-import localization from './shared/localization';
 import logger from './shared/logger';
+import headersConfig from './config/headers-config';
+import parsersConfig from './config/parsers-config';
+import contentConfig from './config/content-config';
 
 logger.info('☕️  Initializing server');
 
 const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const server = next({ dev });
-const handle = server.getRequestHandler();
+const server = nextServer({ dev });
 
 server.prepare().then(() => {
   const app = express();
 
-  app.get('/api/v1/data', (_req, res) =>
-    res.json({
-      status: 'Success',
-      data: new Date().toISOString()
-    })
-  );
+  app.get('/health', (_req, res) => {
+    res.status(200).end();
+  });
 
-  app.get('/data/:id', (req, res) => server.render(req, res, '/data', { id: req.params.id }));
+  app.get('/robots.txt', (_req, res, next) => {
+    if (process.env.NODE_ENV !== 'production') {
+      res.end();
+    } else {
+      next();
+    }
+  });
 
-  nextI18NextMiddleware(localization, server, app);
-
-  app.get('*', (req, res) => handle(req, res));
+  headersConfig(app);
+  parsersConfig(app);
+  contentConfig(app, server);
 
   app.listen(port, (err: any) => {
     if (err) {
