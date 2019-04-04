@@ -25,7 +25,13 @@ This script will transpile the server using tsc and build a production bundle of
 
 This script run in development mode as usuall. It is already configured to allow a debugger to attach to it at any point after running by using `--inspect` in the `dev:start` npm script. However, if it is necessary to debug the server initialization, it will be necessary to change `--inspect` into `--inspect-brk` so that the server does not start execution until a debugger is attached.
 
-## Experiments
+## Environment variables
+| Name | Possible values | Default | Description  |
+| --- | --- | --- | --- |
+| NODE_ENV | `production`, `development` | none | Sets the optimization requirements of the servers. |
+| LOG_LEVEL | `error`, `warn`, `info`, `verbose`, `debug`, `silly` | `error` for file logs and `debug` for console | Sets the logging level of the application. If set, the value is applied for both file and console logs. Console logs are enabled when `NODE_ENV != 'development'`. |
+
+## Checklist
 - [x] Typescript client and server
 - [x] Nodemon-based dev server
 - [x] VS Code server debugging

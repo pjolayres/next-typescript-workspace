@@ -3,41 +3,37 @@ import next from 'next';
 import nextI18NextMiddleware from 'next-i18next/middleware';
 
 import localization from './shared/localization';
+import logger from './shared/logger';
+
+logger.info('☕️  Initializing server');
 
 const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const server = next({ dev });
+const handle = server.getRequestHandler();
 
-console.log(`> Initializing`); // tslint:disable-line: no-console
+server.prepare().then(() => {
+  const app = express();
 
-if (dev) {
-  console.log(`> Production: false`); // tslint:disable-line: no-console
-} else {
-  console.log(`> Production: true`); // tslint:disable-line: no-console
-}
-
-app.prepare().then(() => {
-  const server = express();
-
-  server.get('/api/v1/data', (_req, res) =>
+  app.get('/api/v1/data', (_req, res) =>
     res.json({
       status: 'Success',
       data: new Date().toISOString()
     })
   );
 
-  server.get('/data/:id', (req, res) => app.render(req, res, '/data', { id: req.params.id }));
+  app.get('/data/:id', (req, res) => server.render(req, res, '/data', { id: req.params.id }));
 
-  nextI18NextMiddleware(localization, app, server);
+  nextI18NextMiddleware(localization, server, app);
 
-  server.get('*', (req, res) => handle(req, res));
+  app.get('*', (req, res) => handle(req, res));
 
-  server.listen(port, (err: any) => {
+  app.listen(port, (err: any) => {
     if (err) {
       throw err;
     }
 
-    console.log(`> Ready on http://localhost:${port}`); // tslint:disable-line: no-console
+    logger.info(`Environment: ${process.env.NODE_ENV}`);
+    logger.info(`📡  The server is initialized and ready at http://localhost:${port}/`);
   });
 });
