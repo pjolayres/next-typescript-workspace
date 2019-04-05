@@ -2,6 +2,10 @@
 
 Experiments based on Next.JS framework using TypeScript. Based on Create Next App (See [README.orig.md](https://github.com/pjolayres/next-typescript-workspace/blob/master/README.orig.md) for more details)
 
+Requirements:
+- Node 10.14+
+- Nodemon (`npm install nodemon -g`)
+
 ## Quick Start
 ```shell
 npm run dev
@@ -58,7 +62,7 @@ Otherwise, use the following script:
 npm run test:api-ci
 ```
 
-This will run the web application on **http://localhost:3000** and execute the API tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
+This will run the web application on http://localhost:3000 and execute the API tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
 
 ### UI tests
 
@@ -82,7 +86,7 @@ Otherwise, use the following script:
 npm run test:ui-ci
 ```
 
-This will run the web application on **http://localhost:3000** and execute the UI tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
+This will run the web application on http://localhost:3000 and execute the UI tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
 
 ## Continuous Integration
 
@@ -117,8 +121,14 @@ npm run test:ci
 - [x] Nodemon-based dev server
 - [x] VS Code server debugging
 - [x] Prettier configuration
-- [x] Text localization
+- [x] Localization/internationalization
+- [x] Automated Unit testing framework
+- [x] Automated API testing framework
+- [x] Automated UI testing framework
+- [x] Prettier config
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
 - [ ] Server-side babel compilation
 - [ ] Automatic RTL styles with postcss-rtl
+- [ ] SCSS
+- [ ] Redux
