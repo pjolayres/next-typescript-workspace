@@ -7,7 +7,7 @@ import { withNamespaces } from '../shared/localization';
 import { LocalizedNextFunctionComponent } from '../types';
 
 
-const Home: LocalizedNextFunctionComponent = ({ t }) => (
+export const Home: LocalizedNextFunctionComponent = ({ t }) => (
   <div>
     <Head title="Home" />
     <Nav />

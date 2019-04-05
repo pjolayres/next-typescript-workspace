@@ -31,6 +31,9 @@ The script runs in development mode as usual. `npm run dev` uses `--inspect` whi
 | NODE_ENV | `production`, `development` | none | Sets the optimization requirements of the servers. |
 | LOG_LEVEL | `error`, `warn`, `info`, `verbose`, `debug`, `silly` | `error` for file logs and `debug` for console | Sets the logging level of the application. If set, the value is applied for both file and console logs. Console logs are enabled when `NODE_ENV != 'development'`. |
 
+## Issues
+1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
+
 ## Checklist
 - [x] Typescript client and server
 - [x] Nodemon-based dev server
