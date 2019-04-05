@@ -14,7 +14,8 @@
     "test": "jest",
     "test:snapshot": "jest --updateSnapshot",
     "test:api": "jest --config=jest.api.config.js",
-    "start": "NODE_ENV=production node ./.server/server/index.js"
+    "test:api-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api\"",
+    "start": "node ./.server/server/index.js"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",

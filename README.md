@@ -39,12 +39,26 @@ Files that end exclusively with `.test.ts` or `.test.tsx` are considered unit te
 
 ### API tests
 
-Files that end with `.api.test.ts` are considered API or integration tests. These are mainly located inside **__tests__/api** directory. Note that in order to run the test successfully, the web application must be running either locally or remotely. The base address of the REST API is assumed to be in `http://localhost:3000` unless the `BASE_URL` environment variable is set with the appropriate value.
+Files that end with `.api.test.ts` are considered API or integration tests. These are mainly located inside **__tests__/api** directory.
 
-Example:
+To execute the API tests on a locally running web application on http://localhost:3000, run the folllowing script:
+```shell
+npm run test:api
+```
+If the web application is running on a different port or on a remote server, use the following script:
+
 ```shell
 BASE_URL=http://localhost:8080 npm run test:api
 ```
+
+Otherwise, use the following script:
+
+```shell
+npm run test:api-ci
+```
+
+This will run the web application on **http://localhost:3000** and execute the API tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for continuous integration setup.
+
 
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
