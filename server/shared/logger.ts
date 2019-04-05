@@ -1,6 +1,7 @@
 import winston, { format, transports } from 'winston';
 import moment from 'moment';
 import fs from 'fs';
+import { Format } from 'logform';
 
 const { combine, timestamp, colorize, splat, printf, errors, json } = format;
 
@@ -21,7 +22,7 @@ const combinedFormats = [
   errors({ stack: true }),
   json(),
   process.env.NODE_ENV !== 'production' ? printf(info => `${info.timestamp} ${info.level}: ${info.message}${info.stack ? `\n${info.stack}` : ''}`) : null
-].filter(item => item != null);
+].filter(item => item != null) as Format[];
 
 const logger = winston.createLogger({
   format: combine(...combinedFormats),

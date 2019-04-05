@@ -24,7 +24,7 @@ interface ApiResponse<T = any> {
   errorCode?: number;
 }
 
-interface ApiListResponse<T = any> extends ApiResponse<ApiListData<T>> {};
+interface ApiListResponse<T = any> extends ApiResponse<ApiListData<T>> {}
 
 interface ApiListData<T = any> {
   items: T;

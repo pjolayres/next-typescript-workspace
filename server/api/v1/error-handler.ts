@@ -12,7 +12,7 @@ export default (req: Request, res: Response, ex: any, handleDefault: boolean) =>
 
   if (customError) {
     let code: number | null = null;
-    let status: string;
+    let status: string | null = null;
 
     if (customError instanceof NotAuthorizedError) {
       code = 401;
