@@ -1,9 +1,11 @@
-import winston from 'winston';
+import winston, { format, transports } from 'winston';
 import moment from 'moment';
 import fs from 'fs';
 
+const { combine, timestamp, colorize, splat, printf, errors, json } = format;
+
 const date = moment();
-const timestamp = date.format('YYYY-MM-DD_HH-mm-ss');
+const fileTimestamp = date.format('YYYY-MM-DD_HH-mm-ss');
 const defaultConsoleLogLevel = 'debug';
 const defaultFileLogLevel = 'error';
 
@@ -11,29 +13,30 @@ fs.mkdir('./logs', () => {
   /* no-op */
 });
 
-const logger = winston.createLogger();
+// Only include colorization and human-readable logs during development. Production environment will always log to file in JSON format.
+const combinedFormats = [
+  timestamp(),
+  process.env.NODE_ENV !== 'production' ? colorize() : null,
+  splat(),
+  errors({ stack: true }),
+  json(),
+  process.env.NODE_ENV !== 'production' ? printf(info => `${info.timestamp} ${info.level}: ${info.message}${info.stack ? `\n${info.stack}` : ''}`) : null
+].filter(item => item != null);
 
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(winston.format.timestamp(), winston.format.colorize(), winston.format.splat(), winston.format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`)),
-      level: process.env.LOG_LEVEL || defaultConsoleLogLevel
-    })
-  );
+const logger = winston.createLogger({
+  format: combine(...combinedFormats),
+  transports: [
+    process.env.NODE_ENV !== 'production'
+      ? new transports.Console({ level: process.env.LOG_LEVEL || defaultConsoleLogLevel })
+      : new transports.File({
+        filename: `./logs/${fileTimestamp}_log.log`,
+        level: process.env.LOG_LEVEL || defaultFileLogLevel,
+        maxsize: 1024 * 1024 * 10 // 10 MB rolling log files
+      })
+  ]
+});
 
-  logger.log('info', `Console logger initialized to "${process.env.LOG_LEVEL || `${defaultConsoleLogLevel} (default)`}"`);
-}
-
-logger.add(
-  new winston.transports.File({
-    format: winston.format.combine(winston.format.timestamp(), winston.format.splat(), winston.format.printf(info => `${info.timestamp} - ${info.level}: ${info.message}`)),
-    filename: `./logs/${timestamp}_log.log`,
-    level: process.env.LOG_LEVEL || defaultFileLogLevel,
-    maxsize: 1024 * 1024 * 10 // 10 MB rolling log files
-  })
-);
-
-logger.log('info', `File logger initialized to "${process.env.LOG_LEVEL || `${defaultFileLogLevel} (default)`}"`);
+logger.log('info', `Logger set to "${logger.transports[0].level}"`);
 
 /*
 Logging levels are as follows:
@@ -46,19 +49,19 @@ Logging levels are as follows:
 */
 
 export default {
-  debug: (message: string, ...args: any[]) => {
-    logger.log('debug', message, ...args);
+  debug: (message: any, ...args: any[]) => {
+    logger.debug(message, ...args);
   },
-  verbose: (message: string, ...args: any[]) => {
-    logger.log('verbose', message, ...args);
+  verbose: (message: any, ...args: any[]) => {
+    logger.verbose(message, ...args);
   },
-  info: (message: string, ...args: any[]) => {
-    logger.log('info', message, ...args);
+  info: (message: any, ...args: any[]) => {
+    logger.info(message, ...args);
   },
-  warn: (message: string, ...args: any[]) => {
-    logger.log('warn', message, ...args);
+  warn: (message: any, ...args: any[]) => {
+    logger.warn(message, ...args);
   },
-  error: (message: string, ...args: any[]) => {
-    logger.log('error', message, ...args);
+  error: (message: any, ...args: any[]) => {
+    logger.error(message, ...args);
   }
 };

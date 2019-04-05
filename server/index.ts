@@ -6,6 +6,7 @@ import headersConfig from './config/headers-config';
 import parsersConfig from './config/parsers-config';
 import contentConfig from './config/content-config';
 
+logger.info(`Environment: ${process.env.NODE_ENV}`);
 logger.info('☕️  Initializing server');
 
 const port = parseInt(process.env.PORT as string, 10) || 3000;
@@ -36,7 +37,6 @@ server.prepare().then(() => {
       throw err;
     }
 
-    logger.info(`Environment: ${process.env.NODE_ENV}`);
-    logger.info(`📡  The server is initialized and ready at http://localhost:${port}/`);
+    logger.info(`📡  The server is ready (http://localhost:${port}/)`);
   });
 });

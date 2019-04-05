@@ -1,14 +1,11 @@
 import { Express } from 'express';
 
+import tools from './tools';
+
 export default (app: Express) => {
   const urlPrefix = '/api/v1';
 
-  app.get(`${urlPrefix}/test`, (_req, res) =>
-    res.json({
-      status: 'Success',
-      data: new Date().toISOString()
-    })
-  );
+  tools(app, urlPrefix);
 
   // Show 404 for unhandled api requests at this point
   app.get(`${urlPrefix}/*`, (_req, res) => {
