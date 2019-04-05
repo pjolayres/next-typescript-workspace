@@ -1,6 +1,6 @@
 module.exports = {
   roots: ['<rootDir>'],
-  testRegex: '(/__tests__/.*|(\\.|/)api\\.test)\\.tsx?$',
+  testRegex: '\\.api\\.test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   globals: {
     'babel-jest': {

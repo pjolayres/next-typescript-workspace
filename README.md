@@ -30,6 +30,7 @@ The script runs in development mode as usual. `npm run dev` uses `--inspect` whi
 | --- | --- | --- | --- |
 | NODE_ENV | `production`, `development` | none | Sets the optimization requirements of the servers. |
 | LOG_LEVEL | `error`, `warn`, `info`, `verbose`, `debug`, `silly` | `error` for file logs and `debug` for console | Sets the logging level of the application. If set, the value is applied for both file and console logs. Console logs are enabled when `NODE_ENV != 'development'`. |
+| BASE_URL | URL without trailing slash | http://localhost:3000 | Used during API and UI testing to determine the environment where the test will be executed. |
 
 ## Testing
 
@@ -39,7 +40,7 @@ Files that end exclusively with `.test.ts` or `.test.tsx` are considered unit te
 
 ### API tests
 
-Files that end with `.api.test.ts` are considered API or integration tests. These are mainly located inside **__tests__/api** directory.
+Files that end with `.api.test.ts` are considered API or integration tests. Global API tests are mainly located inside **__tests__/api** directory but may also be located elsewhere in the directory tree.
 
 To execute the API tests on a locally running web application on http://localhost:3000, run the folllowing script:
 ```shell
@@ -57,11 +58,59 @@ Otherwise, use the following script:
 npm run test:api-ci
 ```
 
-This will run the web application on **http://localhost:3000** and execute the API tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for continuous integration setup.
+This will run the web application on **http://localhost:3000** and execute the API tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
 
+### UI tests
+
+Files that end with `.ui.test.ts` are considered UI or end-to-end tests. Global UI tests are mainly located inside **__tests__/ui** directory.
+
+It uses testcafe and headless chrome in order to perform the tests. Because of this, any environment that runs the test requires chrome to be installed in the system. This may be changed to chromium or firefox in `package.json` since either one can run headless instances.
+
+To execute the UI tests on a locally running web application on http://localhost:3000, run the folllowing script:
+```shell
+npm run test:ui
+```
+If the web application is running on a different port or on a remote server, use the following script:
+
+```shell
+BASE_URL=http://localhost:8080 npm run test:ui
+```
+
+Otherwise, use the following script:
+
+```shell
+npm run test:ui-ci
+```
+
+This will run the web application on **http://localhost:3000** and execute the UI tests on this instance. Once all the tests are finished, the web application will exit with a success or failure code based on the result of the tests. This case is also useful for a continuous integration pipeline.
+
+## Continuous Integration
+
+Any continuous integration workflows will need to run the following scripts
+
+```shell
+npm run lint
+npm run build
+npm run test
+npm run test:api-ci
+npm run test:ui-ci
+```
+
+This will perform the following checks:
+1. All code are properly linted and type safety is ensured.
+1. A production build is successful
+1. All unit tests are finished successfully including snapshot component tests
+1. Automated API tests are finished successfully on a production-like environment
+1. Automated UI tests are finished successfully using a headless browser
+
+To run all tests in a single script, use:
+```shell
+npm run test:ci
+```
 
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
+1. `next build` fails if UI tests (e.g. `index.ui.test.ts`) are co-located inside the **/pages** directory beside the corresponding page. Unit tests with snapshots are fine though.
 
 ## Checklist
 - [x] Typescript client and server
