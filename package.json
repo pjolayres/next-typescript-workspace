@@ -15,7 +15,7 @@
     "test:snapshot": "jest --updateSnapshot",
     "test:api": "jest --config=jest.api.config.js",
     "test:api-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api\"",
-    "test:ui": "testcafe chromium:headless ./__tests__/ui/**/*.ts",
+    "test:ui": "testcafe chrome:headless ./__tests__/ui/**/*.ts",
     "test:ui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui\"",
     "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci",
     "start": "node ./.server/server/index.js"

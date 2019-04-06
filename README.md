@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/pjolayres/next-typescript-workspace.svg?branch=master)](https://travis-ci.com/pjolayres/next-typescript-workspace)
+[![CircleCI](https://circleci.com/gh/pjolayres/next-typescript-workspace.svg?style=svg)](https://circleci.com/gh/pjolayres/next-typescript-workspace)
 
 # Next.js Typescript Workspace
 
