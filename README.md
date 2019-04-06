@@ -63,6 +63,8 @@ The script runs in development mode as usual. `npm run dev` uses `--inspect` whi
 | NODE_ENV | `production`, `development` | none | Sets the optimization requirements of the servers. |
 | LOG_LEVEL | `error`, `warn`, `info`, `verbose`, `debug`, `silly` | `error` for file logs and `debug` for console | Sets the logging level of the application. If set, the value is applied for both file and console logs. Console logs are enabled when `NODE_ENV != 'development'`. |
 | BASE_URL | URL without trailing slash | http://localhost:3000 | Used during API and UI testing to determine the environment where the test will be executed. |
+| TEST_BROWSER | chrome, chrome:headless, chromium, etc. | chrome:headless | Used during UI tests in order to control which browser will be usin in certain CI environments (e.g. docker = chromium:headless, Travis CI: chrome:headless, etc.). |
+
 
 ## Testing
 

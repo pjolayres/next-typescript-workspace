@@ -15,11 +15,11 @@
     "test:snapshot": "jest --updateSnapshot",
     "test:api": "jest --config=jest.api.config.js",
     "test:api-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api\"",
-    "test:ui": "testcafe chrome:headless ./__tests__/ui/**/*.ts",
-    "test:ui-chromium": "testcafe chromium:headless ./__tests__/ui/**/*.ts",
+    "test:ui": "TEST_BROWSER=chrome:headless npm run test:ui-browser",
+    "test:ui-browser": "testcafe $TEST_BROWSER ./__tests__/ui/**/*.ts",
     "test:ui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui\"",
-    "test:ui-chromium-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui-chromium\"",
     "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci",
+    "test:ci-browser": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci-custom",
     "start": "node ./.server/server/index.js"
   },
   "dependencies": {
