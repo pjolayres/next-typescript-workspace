@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/pjolayres/next-typescript-workspace.svg?branch=master)](https://travis-ci.com/pjolayres/next-typescript-workspace)
+
 # Next.js Typescript Workspace
 
 Experiments based on Next.JS framework using TypeScript. Based on Create Next App (See [README.orig.md](https://github.com/pjolayres/next-typescript-workspace/blob/master/README.orig.md) for more details)
