@@ -1,0 +1,19 @@
+version: '2.1'
+
+services:
+  node:
+    image: next-typescript-workspace
+    build:
+      context: .
+      dockerfile: ./.docker/node.development.dockerfile
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - ./pages:/usr/src/app/pages
+      - ./server:/usr/src/app/server
+      - ./shared:/usr/src/app/shared
+      - ./static:/usr/src/app/static
+      - ./types:/usr/src/app/types
+    ports:
+      - 3000:3000

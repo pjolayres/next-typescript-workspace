@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+  node:
+    image: next-typescript-workspace
+    build:
+      context: .
+      dockerfile: ./.docker/node.ci.dockerfile
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: info
+    volumes:
+      - ./logs:/usr/src/app/logs
+    ports:
+      - 3000:3000

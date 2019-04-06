@@ -15,6 +15,11 @@ This script will transpile the server using tsc and run the server in developmen
 
 The website will be available through [http://localhost:3000/](http://localhost:3000/).
 
+It is also possible to run the development environment using docker:
+```shell
+docker-compose up --build
+```
+
 ## Production build
 ```shell
 npm run build
@@ -68,7 +73,7 @@ This will run the web application on http://localhost:3000 and execute the API t
 
 Files that end with `.ui.test.ts` are considered UI or end-to-end tests. Global UI tests are mainly located inside **__tests__/ui** directory.
 
-It uses testcafe and headless chrome in order to perform the tests. Because of this, any environment that runs the test requires chrome to be installed in the system. This may be changed to chromium or firefox in `package.json` since either one can run headless instances.
+It uses testcafe and headless chromium in order to perform the tests. Because of this, any environment that runs the test requires chromium to be installed in the system. This may be changed to chrome or firefox in `package.json` scripts since either one can run headless instances as well.
 
 To execute the UI tests on a locally running web application on http://localhost:3000, run the folllowing script:
 ```shell
@@ -111,6 +116,13 @@ To run all tests in a single script, use:
 ```shell
 npm run test:ci
 ```
+
+Docker can also be used to execute the tests by running the following script:
+```shell
+docker-compose -f docker-compose.ci.yml up --build
+```
+
+This will ensure that the test execution environment has all the required tools to run properly (node, chromium, etc.).
 
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.

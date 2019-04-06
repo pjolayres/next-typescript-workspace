@@ -15,7 +15,7 @@
     "test:snapshot": "jest --updateSnapshot",
     "test:api": "jest --config=jest.api.config.js",
     "test:api-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api\"",
-    "test:ui": "testcafe chrome:headless ./__tests__/ui/**/*.ts",
+    "test:ui": "testcafe chromium:headless ./__tests__/ui/**/*.ts",
     "test:ui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui\"",
     "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci",
     "start": "node ./.server/server/index.js"
@@ -52,6 +52,7 @@
     "babel-preset-react": "^6.24.1",
     "concurrently": "^4.1.0",
     "jest": "^24.7.1",
+    "prettier": "1.16.4",
     "prettier-tslint": "^0.4.2",
     "react-test-renderer": "^16.8.6",
     "shx": "^0.3.2",
