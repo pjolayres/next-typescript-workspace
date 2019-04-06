@@ -29,4 +29,4 @@ EXPOSE 3000 9229
 
 RUN npm run build
 
-CMD npm run test:ci
+CMD npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-chromium-ci

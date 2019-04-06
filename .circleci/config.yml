@@ -4,6 +4,9 @@
 #
 version: 2
 jobs:
+  machine:
+    environment:
+      DBUS_SESSION_BUS_ADDRESS: /dev/null
   build:
     docker:
       # specify the version you desire here

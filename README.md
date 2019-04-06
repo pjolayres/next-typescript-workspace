@@ -96,7 +96,7 @@ This will run the web application on http://localhost:3000 and execute the API t
 
 Files that end with `.ui.test.ts` are considered UI or end-to-end tests. Global UI tests are mainly located inside **__tests__/ui** directory.
 
-It uses testcafe and headless chromium in order to perform the tests. Because of this, any environment that runs the test requires chromium to be installed in the system. This may be changed to chrome or firefox in `package.json` scripts since either one can run headless instances as well.
+It uses testcafe and headless chrome in order to perform the tests. Because of this. This may be changed to chromium or firefox in `package.json` scripts since either one can run headless instances as well. Consequently, the docker test environment is configured to use chromium instead of chrome.
 
 To execute the UI tests on a locally running web application on http://localhost:3000, run the folllowing script:
 ```shell
