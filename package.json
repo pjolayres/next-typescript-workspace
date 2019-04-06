@@ -18,8 +18,9 @@
     "test:ui": "TEST_BROWSER=chrome:headless npm run test:ui-browser",
     "test:ui-browser": "testcafe $TEST_BROWSER ./__tests__/ui/**/*.ts",
     "test:ui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui\"",
+    "test:ui-browser-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui-browser\"",
     "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci",
-    "test:ci-browser": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci-browser",
+    "test:ci-browser": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-browser-ci",
     "start": "node ./.server/server/index.js"
   },
   "dependencies": {
