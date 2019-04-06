@@ -152,6 +152,7 @@ This will ensure that the test execution environment has all the required tools 
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
 1. `next build` fails if UI tests (e.g. `index.ui.test.ts`) are co-located inside the **/pages** directory beside the corresponding page. Unit tests with snapshots are fine though.
+1. Using `chrome:headless` during UI testing in Circle CI is not working (docker image: `circleci/node:10.15.3-browsers`). When starting the test, Chrome does not start which is causes the build to fail. As a workaround, `firefox:headless` seems to be working just fine.
 
 ## Checklist
 - [x] Typescript client and server
@@ -164,6 +165,8 @@ This will ensure that the test execution environment has all the required tools 
 - [x] Automated UI testing framework
 - [x] Prettier config
 - [x] Docker development, test, and production configurations
+- [x] Travis CI integration
+- [x] Circle CI integration
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
 - [ ] Automatic RTL styles with postcss-rtl
