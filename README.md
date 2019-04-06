@@ -33,14 +33,20 @@ It is also possible to run the production environment using docker:
 docker-compose -f docker-compose.prod.yml up --build
 ```
 This assumes that the production server already has the output of `npm run build`:
-- .next/
-- .server/
-- .docker/
-- static/
-- docker-compose.prod.yml
-- package.json
-- package-lock.json
-- server.js
+```bash
+├── .docker
+│   └── *
+├── .next
+│   └── *
+├── .server
+│   └── *
+├── static
+│   └── *
+├── docker-compose.prod.yml
+├── package.json
+├── package-lock.json
+└── server.js
+```
 
 ## VS Code debugging
 1. `npm run dev` or `npm run debug`
@@ -155,7 +161,6 @@ This will ensure that the test execution environment has all the required tools 
 - [x] Docker development, test, and production configurations
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
-- [ ] Server-side babel compilation
 - [ ] Automatic RTL styles with postcss-rtl
 - [ ] SCSS
 - [ ] Redux
