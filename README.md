@@ -164,3 +164,4 @@ This will ensure that the test execution environment has all the required tools 
 - [ ] Automatic RTL styles with postcss-rtl
 - [ ] SCSS
 - [ ] Redux
+- [ ] Error pages (404, 500, etc.)
