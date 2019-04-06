@@ -5,7 +5,7 @@ services:
     image: next-typescript-workspace
     build:
       context: .
-      dockerfile: ./.docker/node.development.dockerfile
+      dockerfile: ./.docker/node.dev.dockerfile
     environment:
       NODE_ENV: development
     volumes:

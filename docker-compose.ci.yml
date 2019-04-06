@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   node:
-    image: next-typescript-workspace
+    image: next-typescript-workspace-ci
     build:
       context: .
       dockerfile: ./.docker/node.ci.dockerfile

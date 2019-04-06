@@ -28,6 +28,11 @@ npm start
 
 This script will transpile the server using tsc and build a production bundle of the website.
 
+It is also possible to run the production environment  using docker:
+```shell
+docker-compose -f docker-compose.prod.yml up --build
+```
+
 ## VS Code debugging
 1. `npm run dev` or `npm run debug`
 2.  Open debugging panel and select `Local: Attach to Node` and press **F5**.

@@ -4,6 +4,7 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
+# Install Chromium
 RUN \
   echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
   && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \

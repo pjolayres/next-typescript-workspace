@@ -1,0 +1,33 @@
+version: '2.1'
+
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./.docker/nginx.prod.dockerfile
+    ports:
+      - 80:80
+    links:
+      - node:node
+    networks:
+      - next-typescript-workspace-prod-network
+
+  node:
+    image: next-typescript-workspace-prod
+    build:
+      context: .
+      dockerfile: ./.docker/node.prod.dockerfile
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: error
+    volumes:
+      - ./logs:/usr/src/app/logs
+    ports:
+      - 3000:3000
+    networks:
+      - next-typescript-workspace-prod-network
+
+networks:
+  next-typescript-workspace-prod-network:
+    driver: bridge
