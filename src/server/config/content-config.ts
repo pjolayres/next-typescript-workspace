@@ -40,7 +40,6 @@ const contentConfig = (app: Express, server: nextServer.Server) => {
   // nextI18NextMiddleware(localization, server, app);
 
   app.get('*', (req, res) => handle(req, res));
-
 };
 
 export default contentConfig;

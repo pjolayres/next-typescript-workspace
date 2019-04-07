@@ -6,7 +6,5 @@ fixture('Getting Started').page(`${baseUrl}/`);
 
 // then create a test and place your code there
 test('Homepage title is correct', async t => {
-  await t
-    .expect(Selector('h1.title').innerText)
-    .eql('Website Title');
+  await t.expect(Selector('h1.title').innerText).eql('Website Title');
 });

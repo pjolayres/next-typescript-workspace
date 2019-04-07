@@ -30,10 +30,10 @@ const logger = winston.createLogger({
     process.env.NODE_ENV !== 'production'
       ? new transports.Console({ level: process.env.LOG_LEVEL || defaultConsoleLogLevel })
       : new transports.File({
-        filename: `./logs/${fileTimestamp}_log.log`,
-        level: process.env.LOG_LEVEL || defaultFileLogLevel,
-        maxsize: 1024 * 1024 * 10 // 10 MB rolling log files
-      })
+          filename: `./logs/${fileTimestamp}_log.log`,
+          level: process.env.LOG_LEVEL || defaultFileLogLevel,
+          maxsize: 1024 * 1024 * 10 // 10 MB rolling log files
+        })
   ]
 });
 

@@ -153,6 +153,7 @@ This will ensure that the test execution environment has all the required tools 
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
 1. `next build` fails if UI tests (e.g. `index.ui.test.ts`) are co-located inside the **/pages** directory beside the corresponding page. Unit tests with snapshots are fine though.
 1. Using `chrome:headless` during UI testing in Circle CI is not working (docker image: `circleci/node:10.15.3-browsers`). When starting the test, Chrome does not start which is causes the build to fail. As a workaround, `firefox:headless` seems to be working just fine.
+1. Some of the npm scripts will not work on **Windows** due to the use of parameter expansion (use value if environment variable is not set). This is done to simplify the scripts defined in package.json. Unfortunately, [cross-env](https://github.com/kentcdodds/cross-env) nor Git Bash does not support this as well. A workaround for now is to use docker for the development environment or install [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) in Windows 10.
 
 ## Checklist
 - [x] Typescript client and server

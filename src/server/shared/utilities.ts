@@ -3,8 +3,8 @@ import moment from 'moment';
 import logger from './logger';
 
 interface Timer {
-    label: string;
-    timestamp: moment.Moment;
+  label: string;
+  timestamp: moment.Moment;
 }
 
 const Utilities = {
