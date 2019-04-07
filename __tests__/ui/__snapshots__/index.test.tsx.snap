@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 <div
-  className="jsx-243749409"
+  className="jsx-3170664004"
 >
   <nav
     className="jsx-4078471715"
@@ -39,57 +39,57 @@ exports[`renders correctly 1`] = `
     </ul>
   </nav>
   <div
-    className="jsx-243749409 hero"
+    className="jsx-3170664004 hero"
   >
     <h1
-      className="jsx-243749409 title"
+      className="jsx-3170664004 title"
     />
     <p
-      className="jsx-243749409 description"
+      className="jsx-3170664004 description"
     >
       To get started, edit 
       <code
-        className="jsx-243749409"
+        className="jsx-3170664004"
       >
         pages/index.js
       </code>
        and save to reload.
     </p>
     <div
-      className="jsx-243749409 row"
+      className="jsx-3170664004 row"
     >
       <a
-        className="jsx-243749409 card"
+        className="jsx-3170664004 card"
         href="https://github.com/zeit/next.js#getting-started"
         onClick={[Function]}
       >
         <h3
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Getting Started →
         </h3>
         <p
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Learn more about Next on Github and in their examples
         </p>
       </a>
       <a
-        className="jsx-243749409 card"
+        className="jsx-3170664004 card"
         href="https://open.segment.com/create-next-app"
         onClick={[Function]}
       >
         <h3
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Examples →
         </h3>
         <p
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Find other example boilerplates on the 
           <code
-            className="jsx-243749409"
+            className="jsx-3170664004"
           >
             create-next-app
           </code>
@@ -97,17 +97,17 @@ exports[`renders correctly 1`] = `
         </p>
       </a>
       <a
-        className="jsx-243749409 card"
+        className="jsx-3170664004 card"
         href="https://github.com/segmentio/create-next-app"
         onClick={[Function]}
       >
         <h3
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Create Next App →
         </h3>
         <p
-          className="jsx-243749409"
+          className="jsx-3170664004"
         >
           Was this tool helpful? Let us know how we can improve it
         </p>
