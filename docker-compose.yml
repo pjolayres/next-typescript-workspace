@@ -10,10 +10,10 @@ services:
       NODE_ENV: development
     volumes:
       - ./logs:/usr/src/app/logs
-      - ./pages:/usr/src/app/pages
-      - ./server:/usr/src/app/server
-      - ./shared:/usr/src/app/shared
-      - ./static:/usr/src/app/static
-      - ./types:/usr/src/app/types
+      - ./src/pages:/usr/src/app/src/pages
+      - ./src/server:/usr/src/app/src/server
+      - ./src/shared:/usr/src/app/src/shared
+      - ./src/static:/usr/src/app/src/static
+      - ./src/types:/usr/src/app/src/types
     ports:
       - 3000:3000

@@ -4,10 +4,12 @@ import compression from 'compression';
 
 const headersConfig = (app: Express) => {
   // Add header precautions for security
-  app.use(helmet({
-    hsts: false,
-    noSniff: false
-  }));
+  app.use(
+    helmet({
+      hsts: false,
+      noSniff: false
+    })
+  );
 
   // Set various global headers
   app.enable('trust proxy');

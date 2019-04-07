@@ -4,16 +4,15 @@ ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 
-COPY ["server.js", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+COPY ["server.js", "next.config.js", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 
 RUN npm install -g pm2@latest
 RUN mkdir -p /var/log/pm2
 
 RUN npm install --production --silent && mv node_modules ../
 
-COPY .next/ ./.next/
-COPY .server/ ./.server/
-COPY static/ ./static/
+COPY dist/ ./dist/
+COPY src/static/ ./src/static/
 
 EXPOSE 3000
 

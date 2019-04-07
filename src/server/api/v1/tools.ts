@@ -17,7 +17,7 @@ export default (app: Express, urlPrefix: string) => {
     try {
       throw new Error('This is a sample error');
     } catch (ex) {
-        errorHandler(req, res, ex, true);
+      errorHandler(req, res, ex, true);
     }
 
     res.end();

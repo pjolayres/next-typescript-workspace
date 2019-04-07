@@ -19,7 +19,7 @@ RUN \
 ENV CHROME_BIN /usr/bin/chromium-browser
 ENV LIGHTHOUSE_CHROMIUM_PATH /usr/bin/chromium-browser
 
-COPY ["server.js", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+COPY ["server.js", "next.config.js", "package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 
 RUN npm install --silent
 
@@ -29,4 +29,6 @@ EXPOSE 3000 9229
 
 RUN npm run build
 
-CMD TEST_BROWSER chromium:headless npm run test:ci-browsear
+ENV TEST_BROWSER chromium:headless
+
+CMD npm run test:ci

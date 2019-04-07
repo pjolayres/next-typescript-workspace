@@ -34,4 +34,4 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
-      - run: TEST_BROWSER=firefox:headless npm run test:ci-browser
+      - run: TEST_BROWSER=firefox:headless npm run test:ci
