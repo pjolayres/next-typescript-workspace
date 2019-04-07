@@ -168,9 +168,9 @@ This will ensure that the test execution environment has all the required tools 
 - [x] Docker development, test, and production configurations
 - [x] Travis CI integration
 - [x] Circle CI integration
+- [x] Error pages (404, 500, etc.)
+- [x] PostCSS (autoprefixer, pixrem, rtl)
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
-- [ ] Automatic RTL styles with postcss-rtl
 - [ ] SCSS
 - [ ] Redux
-- [ ] Error pages (404, 500, etc.)

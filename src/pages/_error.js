@@ -5,8 +5,8 @@ export default class ErrorPage extends Component {
   static getInitialProps({ res, err }) {
     const statusCode = res ? res.statusCode : err ? err.statusCode : null;
     return {
-      statusCode,
-      namespacesRequired: ['common']
+      namespacesRequired: ['common'],
+      statusCode
     };
   }
 
