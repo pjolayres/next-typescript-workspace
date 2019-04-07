@@ -14,15 +14,15 @@ import './style.scss';
 interface Props extends LocalizedProps, ReduxStateProps, ActionProps {}
 
 export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
-  const { t, version, name, setVersion, setName } = props;
+  const { t, version, name } = props;
 
   return (
     <div className="showcase">
       <h1>{t('LocalizedText')}</h1>
       <h2>Version: {version}</h2>
       <h2>Name: {name}</h2>
-      <button onClick={() => setVersion('1.0.1')}>Change version</button>
-      <button onClick={() => setName('Name')}>Change name</button>
+      <button onClick={() => props.setVersion('1.0.1')}>Change version</button>
+      <button onClick={() => props.setName('Name')}>Change name</button>
     </div>
   );
 };
@@ -37,8 +37,8 @@ interface ReduxStateProps {
 }
 
 interface ActionProps {
-  setName: (name: string) => void;
-  setVersion: (version: string) => void;
+  setName: typeof setName;
+  setVersion: typeof setVersion;
   logout: () => void;
 }
 
