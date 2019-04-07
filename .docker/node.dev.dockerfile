@@ -8,9 +8,7 @@ COPY ["server.js", "package.json", "package-lock.json*", "npm-shrinkwrap.json*",
 
 RUN npm install nodemon -g
 
-RUN npm install --silent
-
-COPY . .
+RUN npm install
 
 EXPOSE 3000 9229
 
