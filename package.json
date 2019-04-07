@@ -6,7 +6,7 @@
     "dev": "npm run clean && concurrently \"npm run dev:server\" \"npm run dev:start\"",
     "dev:server": "tsc --project './tsconfig.server.json' --watch --preserveWatchOutput --outDir './dist/server'",
     "dev:start": "wait-on ./dist/server/server/index.js && NODE_ENV=development nodemon --watch ./dist/server ${NODE_INSPECT:=--inspect} --verbose server.js",
-    "build": "npm run clean && next build ./src && npm run build:server",
+    "build": "npm run clean && BUNDLE_ANALYZE=both next build ./src && npm run build:server",
     "build:server": "tsc --project './tsconfig.server.json' --outDir './dist/server'",
     "lint": "tslint --project tsconfig.json && tsc && tslint --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --check **/*.ts",
     "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --write **/*.ts",
@@ -20,6 +20,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@zeit/next-bundle-analyzer": "^0.1.2",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "autoprefixer": "^9.5.0",
