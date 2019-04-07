@@ -173,6 +173,6 @@ This will ensure that the test execution environment has all the required tools 
 - [x] SCSS
 - [x] Bundle report
 - [x] Redux
+- [x] Server-side and client-side fetch
 - [ ] Redux persist (not necessarily redux-persist)
-- [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
