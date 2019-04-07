@@ -1,6 +1,7 @@
 import { NextFunctionComponent } from 'next';
+import App from 'next/app';
 
-// React Props
+// React props
 
 interface LocalizedProps {
   t: (key: string) => string;
@@ -14,7 +15,7 @@ interface LocalizationInitialProps {
 
 interface LocalizedNextFunctionComponent<P = LocalizedProps, IP = LocalizationInitialProps, C = NextContext> extends NextFunctionComponent<P, IP, C> {}
 
-// API Response Types
+// API Response types
 
 interface ApiResponse<T = any> {
   success: boolean;
@@ -31,4 +32,10 @@ interface ApiListData<T = any> {
   skip: number;
   take: number;
   totalItems: number;
+}
+
+// Miscellaneous types
+
+interface AppWindow extends Window {
+  [key: string]: any;
 }

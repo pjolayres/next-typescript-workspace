@@ -172,6 +172,7 @@ This will ensure that the test execution environment has all the required tools 
 - [x] PostCSS (autoprefixer, pixrem, rtl)
 - [x] SCSS
 - [x] Bundle report
+- [x] Redux
+- [ ] Redux persist (not necessarily redux-persist)
 - [ ] Server-side and client-side fetch
 - [ ] Url/query parameters
-- [ ] Redux

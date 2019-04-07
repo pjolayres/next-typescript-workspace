@@ -1,17 +1,27 @@
-import React from 'react'
-import App, { Container } from 'next/app'
+import React from 'react';
+import App, { Container } from 'next/app';
+import { Store, AnyAction } from 'redux';
+import { Provider } from 'react-redux';
 
 import { appWithTranslation } from '../shared/localization';
+import { ReduxState } from '../state/types';
+import withRedux from '../components/with-redux';
 
-class MyApp extends App {
+interface ReduxAppProps {
+  reduxStore: Store<ReduxState, AnyAction>;
+}
+
+export class MyApp extends App<ReduxAppProps> {
   render() {
-    const { Component, pageProps } = this.props
+    const { Component, pageProps, reduxStore } = this.props;
     return (
       <Container>
-        <Component {...pageProps} />
+        <Provider store={reduxStore}>
+          <Component {...pageProps} />
+        </Provider>
       </Container>
-    )
+    );
   }
 }
 
-export default appWithTranslation(MyApp);
+export default withRedux(appWithTranslation(MyApp));
