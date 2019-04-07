@@ -8,10 +8,10 @@
     "noEmit": false
   },
   "exclude": [
-    "shared/components/**/*"
+    "src/shared/components/**/*"
   ],
   "include": [
-    "server/**/*",
-    "shared/**/*"
+    "src/server/**/*",
+    "src/shared/**/*"
   ]
 }

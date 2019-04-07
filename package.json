@@ -1,14 +1,14 @@
 {
   "name": "create-next-example-app",
   "scripts": {
-    "clean": "shx --silent rm -rf ./.server && shx --silent rm -rf ./.next",
+    "clean": "shx --silent rm -rf ./dist",
     "debug": "npm run clean && concurrently \"npm run dev:server\" \"npm run debug:start\"",
     "debug:start": "wait-on ./.server/server/index.js && NODE_ENV=development nodemon --watch ./.server --inspect-brk --verbose ./.server/server/index.js",
     "dev": "npm run clean && concurrently \"npm run dev:server\" \"npm run dev:start\"",
     "dev:server": "tsc --project './tsconfig.server.json' --watch --preserveWatchOutput --outDir './.server'",
     "dev:start": "wait-on ./.server/server/index.js && NODE_ENV=development nodemon --watch ./.server --inspect --verbose ./.server/server/index.js",
-    "build": "npm run clean && next build && npm run build:server",
-    "build:server": "tsc --project './tsconfig.server.json' --outDir './.server'",
+    "build": "npm run clean && next build ./src && npm run build:server",
+    "build:server": "tsc --project './tsconfig.server.json' --outDir './dist/server'",
     "lint": "tslint --project tsconfig.json && tsc && tslint --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --check **/*.ts",
     "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --write **/*.ts",
     "test": "jest",
@@ -21,7 +21,7 @@
     "test:ui-browser-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui-browser\"",
     "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci",
     "test:ci-browser": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-browser-ci",
-    "start": "node ./.server/server/index.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "@zeit/next-typescript": "^1.1.1",
