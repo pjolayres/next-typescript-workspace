@@ -16,7 +16,8 @@
     "test:api-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api\"",
     "test:ui": "testcafe ${TEST_BROWSER:-chrome:headless} ./__tests__/ui/**/*.ts",
     "test:ui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:ui\"",
-    "test:ci": "npm run lint && npm run build && npm run test && npm run test:api-ci && npm run test:ui-ci && echo Tests passed!",
+    "test:apiui-ci": "concurrently --kill-others --success first \"NODE_ENV=production npm start\" \"wait-on http://localhost:3000/health && npm run test:api && npm run test:ui\"",
+    "test:ci": "npm run lint && npm run build && npm run test && npm run test:apiui-ci && echo Tests passed!",
     "start": "node server.js"
   },
   "dependencies": {
