@@ -149,6 +149,10 @@ docker-compose -f docker-compose.ci.yml up --build
 
 This will ensure that the test execution environment has all the required tools to run properly (node, chromium, etc.).
 
+## Notes
+1. Redux is always initialized to the default state when being rendered in the server. After the client's initial render, the state is then rehydrated from localStorate which triggers an update to dependent components.
+1. The application is using redux-persist is being used without the need for `<PersistGate />`. Since server-side rendering means loaded pages will have preliminary data in them, it is better to render the page without the artificial blocking that `PersistGate` provides.
+
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.
 1. `next build` fails if tests (e.g. `index.ui.test.ts`) are co-located inside the **/pages** directory beside the corresponding page. Next.js build assumes these files are pages themselves.
@@ -174,5 +178,6 @@ This will ensure that the test execution environment has all the required tools 
 - [x] Bundle report
 - [x] Redux
 - [x] Server-side and client-side fetch
-- [ ] Redux persist (not necessarily redux-persist)
-- [ ] Url/query parameters
+- [x] Redux persist
+- [x] Server-side query parameters
+- [ ] Server-side URL parameters

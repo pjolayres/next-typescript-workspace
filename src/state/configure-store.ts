@@ -1,6 +1,8 @@
 import { createStore, applyMiddleware, compose, AnyAction, Store } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import { persistStore, persistReducer, PersistConfig, Persistor } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import reducers from './reducers';
 import { ReduxState } from './types';
@@ -12,14 +14,32 @@ declare var process: {
 };
 
 const middleware: any[] = [thunk];
+const isServer = typeof window === 'undefined';
 
-if (process.env.NODE_ENV !== 'test') {
+if (!isServer && process.env.NODE_ENV !== 'test') {
   const logger = createLogger();
   middleware.push(logger);
 }
 
-export default function configureStore(initialState?: ReduxState) {
-  const store: Store<ReduxState, AnyAction> = createStore(reducers, initialState, compose(applyMiddleware(...middleware)));
+const persistConfig: PersistConfig = {
+  key: 'app-state-v1',
+  storage,
+  whitelist: ['userData']
+};
 
-  return store;
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export interface StoreConfig {
+  store: Store<ReduxState, AnyAction>;
+  persistor: Persistor;
+}
+
+export default function configureStore(initialState?: ReduxState) {
+  const store: Store<ReduxState, AnyAction> = createStore(persistedReducer, initialState, compose(applyMiddleware(...middleware)));
+  const persistor: Persistor = persistStore(store);
+
+  return {
+    store,
+    persistor
+  } as StoreConfig;
 }

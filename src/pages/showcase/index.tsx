@@ -24,7 +24,7 @@ interface User {
 }
 
 export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
-  const { t, version, name, data } = props;
+  const { t, version, name, data, rehydrated } = props;
 
   const [count, setCount] = useState(1);
   const [user, setUser] = useState<User | null>(() => data); // Data is based on prefetched data from the server
@@ -42,6 +42,7 @@ export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
 
   return (
     <div className="showcase">
+      {!rehydrated && <h1>Loading...</h1>}
       <h1>{t('LocalizedText')}</h1>
       <h2>Version: {version}</h2>
       <button onClick={() => props.setVersion('1.0.1')}>Change version</button>
@@ -79,6 +80,7 @@ Showcase.getInitialProps = async ({ query }) => {
 interface ReduxStateProps {
   version: string;
   name: string;
+  rehydrated: boolean;
 }
 
 interface ActionProps {
@@ -89,7 +91,8 @@ interface ActionProps {
 
 const mapStateToProps = (state: ReduxState): ReduxStateProps => ({
   version: state.appData.version,
-  name: state.userData.name
+  name: state.userData.name,
+  rehydrated: (state._persist && state._persist.rehydrated) || false
 });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<ReduxState, {}, Action>): ActionProps => {
