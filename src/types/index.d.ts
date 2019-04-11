@@ -25,10 +25,10 @@ interface ApiResponse<T = any> {
   errorCode?: number;
 }
 
-interface ApiListResponse<T = any> extends ApiResponse<ApiListData<T>> {}
+interface ApiListResponse<T = any> extends ApiResponse<ListData<T>> {}
 
-interface ApiListData<T = any> {
-  items: T;
+interface ListData<T = any> {
+  items: Array<T>;
   skip: number;
   take: number;
   totalItems: number;

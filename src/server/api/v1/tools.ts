@@ -1,14 +1,18 @@
 import { Express, Request, Response } from 'express';
 
+import { ApiResponse } from '../../../types';
+
 import errorHandler from './error-handler';
 
 export default (app: Express, urlPrefix: string) => {
   app.get(`${urlPrefix}/tools/test`, (_req: Request, res: Response) => {
-    res.json({
+    const result: ApiResponse = {
       success: true,
       status: 'Success',
       data: new Date().toISOString()
-    });
+    };
+
+    res.json(result);
 
     res.end();
   });
