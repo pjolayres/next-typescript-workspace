@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ApiResponse } from '../../../types';
+import { ApiResponse } from '../../../../types';
 import logger from '../../shared/logger';
 import { CustomError, NotImplementedError, NotAuthorizedError, ValidationError, ErrorCodes } from '../../../shared/errors';
 

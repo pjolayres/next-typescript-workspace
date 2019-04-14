@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 
 import { EventItem } from '../../models/types';
-import { ApiListResponse, ListData } from '../../../types';
+import { ApiListResponse, ListData } from '../../../../types';
 
 import errorHandler from './error-handler';
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { withNamespaces } from '../../shared/localization';
-import { LocalizedNextFunctionComponent, LocalizedProps } from '../../types';
+import { LocalizedNextFunctionComponent, LocalizedProps } from '../../../types';
 import { ReduxState } from '../../state/types';
 import { setName, logout } from '../../state/user-data/actions';
 import { setVersion } from '../../state/app-data/actions';

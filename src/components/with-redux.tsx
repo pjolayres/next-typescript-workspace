@@ -9,7 +9,7 @@ import { Persistor } from 'redux-persist';
 
 import configureStore, { StoreConfig } from '../state/configure-store';
 import { ReduxState } from '../state/types';
-import { AppWindow } from '../types';
+import { AppWindow } from '../../types';
 import { MyApp } from '../pages/_app';
 
 const isServer = typeof window === 'undefined';
