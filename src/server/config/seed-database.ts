@@ -21,7 +21,7 @@ export default async () => {
   const seeders = [seeder1];
 
   for (const seeder of seeders) {
-    databaseMetadata = (await seeder(entityManager, databaseMetadata)) as DatabaseMetadata;
+    databaseMetadata = await seeder(entityManager, databaseMetadata);
   }
 
   entityManager.save(databaseMetadata);
