@@ -43,6 +43,9 @@
     "redux-persist": "^5.10.0",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
+    "sqlite3": "^4.0.6",
+    "typeorm": "^0.2.16",
     "winston": "^3.2.1"
   },
   "devDependencies": {
