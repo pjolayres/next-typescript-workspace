@@ -1,19 +1,8 @@
-import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator } from 'typeorm';
+import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID } from 'typeorm';
 
-// import EventItem from '../entities/event-item';
-import { ListData } from '../../../types';
+import { ListData, FetchListOptions } from '../../../types';
 
-export type SearchableEntityProperties<T> = Pick<T, { [K in keyof T]: T[K] extends string ? K : never }[keyof T]>;
-
-export interface FetchListOptions<TEntity> {
-  skip?: number;
-  take?: number;
-  order?: { [P in keyof TEntity]?: 'ASC' | 'DESC' | 1 | -1 };
-  searchText?: string;
-  searchFields?: Array<keyof SearchableEntityProperties<TEntity>>;
-}
-
-export default class Repository<TEntity, TPrimaryKey> {
+export default class Repository<TEntity, TPrimaryKey = string | number | Date | ObjectID> {
   manager: EntityManager;
   type: ObjectType<TEntity>;
 
@@ -31,13 +20,11 @@ export default class Repository<TEntity, TPrimaryKey> {
     const skip = Math.max(options && typeof options.skip !== 'undefined' ? options.skip : 0, 0);
     const take = Math.min(options && typeof options.take !== 'undefined' ? options.take : 20, 100);
 
-    const queryOptions: FindManyOptions<TEntity> = {};
-    if (options && typeof options.skip !== 'undefined') {
-      queryOptions.skip = options.skip;
-    }
-    if (options && typeof options.take !== 'undefined') {
-      queryOptions.take = options.take;
-    }
+    const queryOptions: FindManyOptions<TEntity> = {
+      skip,
+      take
+    };
+
     if (options && options.order) {
       queryOptions.order = options.order;
     }
@@ -53,7 +40,7 @@ export default class Repository<TEntity, TPrimaryKey> {
     }
 
     const repository = this.manager.getRepository(this.type);
-    const [ items, totalItems ] = await repository.findAndCount(queryOptions);
+    const [items, totalItems] = await repository.findAndCount(queryOptions);
 
     const result: ListData<TEntity> = {
       items,
@@ -65,10 +52,9 @@ export default class Repository<TEntity, TPrimaryKey> {
     return result;
   }
 
-  async getById(_id: TPrimaryKey) {
-    const result: TEntity | null = null;
-
-    // TODO: Implement
+  async getById(id: TPrimaryKey) {
+    const repository = this.manager.getRepository(this.type);
+    const result = await repository.findOne(id);
 
     return result;
   }
