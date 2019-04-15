@@ -22,7 +22,7 @@ export default async () => {
 
   for (const seeder of seeders) {
     databaseMetadata = await seeder(entityManager, databaseMetadata);
-  }
 
-  entityManager.save(databaseMetadata);
+    await entityManager.save(databaseMetadata);
+  }
 };

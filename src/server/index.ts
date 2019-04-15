@@ -1,12 +1,11 @@
 import express from 'express';
 import nextServer from 'next';
-import { createConnection } from 'typeorm';
 
 import logger from './shared/logger';
 import headersConfig from './config/headers-config';
 import parsersConfig from './config/parsers-config';
 import contentConfig from './config/content-config';
-import seedDatabase from './config/seed-database';
+import databaseInitializer from './config/database-initializer';
 
 logger.info(`Environment: ${process.env.NODE_ENV}`);
 logger.info('☕️  Initializing server');
@@ -34,15 +33,7 @@ server.prepare().then(async () => {
   parsersConfig(app);
   contentConfig(app, server);
 
-  try {
-    logger.info('Initializing database.');
-    await createConnection();
-    await seedDatabase();
-    logger.info('Database initialized.');
-  } catch (ex) {
-    logger.error('Failed to initialize database.');
-    logger.error(ex);
-  }
+  await databaseInitializer();
 
   app.listen(port, (err: any) => {
     if (err) {

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 import EventItem from './event-item';
 
@@ -7,19 +7,20 @@ export default class EventRegistration {
   @PrimaryGeneratedColumn('uuid')
   EventRegistrationId!: string;
 
-  @Column('uuid')
+  @Column()
   EventItemId!: string;
 
   @ManyToOne(_type => EventItem, item => item.EventRegistrations)
-  EventItem?: EventItem;
+  @JoinColumn({ name: 'EventItemId' })
+  EventItem!: EventItem;
 
   @Column('nvarchar', { length: 2000 })
   EmailAddress!: string;
 
-  @Column('nvarchar', { length: 2000 })
+  @Column('nvarchar', { length: 2000, nullable: true })
   PhoneNumber?: string;
 
-  @Column('nvarchar', { length: 2000 })
+  @Column('nvarchar', { length: 2000, nullable: true })
   Remarks?: string;
 
   @CreateDateColumn()

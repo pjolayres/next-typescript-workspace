@@ -16,6 +16,7 @@
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "target": "esnext",
     "typeRoots": ["./types", "./node_modules/@types"]
   },

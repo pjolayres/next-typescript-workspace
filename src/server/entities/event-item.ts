@@ -25,13 +25,13 @@ export default class EventItem {
   @Column('nvarchar', { length: 2000, nullable: true })
   Address?: string;
 
-  @Column('double', { nullable: true })
+  @Column('double')
   Latitude?: number;
 
-  @Column('double', { nullable: true })
+  @Column('double')
   Longitude?: number;
 
-  @OneToMany(_type => EventRegistration, item => item.EventItem)
+  @OneToMany(_type => EventRegistration, item => item.EventItem, { cascade: true })
   EventRegistrations?: EventRegistration[];
 
   @Column('nvarchar', { length: 2000, nullable: true })
