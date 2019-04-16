@@ -2,6 +2,7 @@ import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions,
 
 import { ListData, FetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
+import { NotImplementedError } from '../../shared/errors';
 
 export default class Repository<TEntity, TPrimaryKey = string | number | Date | ObjectID> {
   manager: EntityManager;
@@ -63,9 +64,51 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     return result;
   }
 
+  async getItemViews(options?: FetchListOptions<TEntity>) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
+  }
+
   async getById(id: TPrimaryKey) {
     const repository = this.manager.getRepository(this.type);
     const result = await repository.findOne(id);
+
+    return result;
+  }
+
+  async getViewById(options?: FetchListOptions<TEntity>) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
+  }
+
+  async add(item: TEntity) {
+    const repository = this.manager.getRepository(this.type);
+    const result = await repository.insert(item);
+
+    return result;
+  }
+
+  async update(item: TEntity) {
+    const repository = this.manager.getRepository(this.type);
+    const id = repository.getId(item);
+    const result = await repository.update(id, item);
+
+    return result;
+  }
+
+  async delete(item: TEntity) {
+    const repository = this.manager.getRepository(this.type);
+    const id = repository.getId(item);
+    const result = await repository.delete(id);
+
+    return result;
+  }
+
+  async deleteById(id: TPrimaryKey) {
+    const repository = this.manager.getRepository(this.type);
+    const result = await repository.delete(id);
 
     return result;
   }
