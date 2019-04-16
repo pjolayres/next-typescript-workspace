@@ -1,6 +1,7 @@
 import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID } from 'typeorm';
 
 import { ListData, FetchListOptions } from '../../../types';
+import Utilities from '../../shared/utilities';
 
 export default class Repository<TEntity, TPrimaryKey = string | number | Date | ObjectID> {
   manager: EntityManager;
@@ -29,14 +30,24 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
       queryOptions.order = options.order;
     }
 
-    if (options && options.searchText && options.searchText.trim() && options.searchFields) {
-      const filter: FindConditions<TEntity> = {};
+    if (options && options.searchFields) {
+      const searchTokens = Utilities.cleanSplit(options.searchText, ' ');
 
-      options.searchFields.forEach(key => {
-        filter[key] = new FindOperator<FindConditions<string>>('like', options.searchText as string) as any;
-      });
+      if (searchTokens.length > 0) {
+        const filters: Array<FindConditions<TEntity>> = [];
 
-      queryOptions.where = filter;
+        options.searchFields.forEach(key => {
+          searchTokens.forEach(searchToken => {
+            const filter: FindConditions<TEntity> = {};
+
+            filter[key] = new FindOperator<FindConditions<string>>('like', `%${searchToken}%` as string) as any;
+
+            filters.push(filter);
+          });
+        });
+
+        queryOptions.where = filters;
+      }
     }
 
     const repository = this.manager.getRepository(this.type);

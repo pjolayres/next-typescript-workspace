@@ -7,7 +7,7 @@ interface Timer {
   timestamp: moment.Moment;
 }
 
-const Utilities = {
+const ServerUtilities = {
   startTimer: (label: string, disableLogging?: boolean) => {
     const result: Timer = {
       label,
@@ -31,4 +31,4 @@ const Utilities = {
   }
 };
 
-export default Utilities;
+export default ServerUtilities;
