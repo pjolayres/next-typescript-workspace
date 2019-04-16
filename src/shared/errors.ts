@@ -12,7 +12,8 @@ export const PermissionErrorCdes = {
 
 export const ValidationErrorCodes = {
   ValidationError: 30000,
-  InvalidEmail: 30001
+  InvalidEmail: 30001,
+  InsertExistingItemError: 30002
 };
 
 export const ErrorCodes = {

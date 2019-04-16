@@ -2,7 +2,7 @@ import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions,
 
 import { ListData, FetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
-import { NotImplementedError } from '../../shared/errors';
+import { NotImplementedError, ValidationError, ValidationErrorCodes } from '../../shared/errors';
 
 export default class Repository<TEntity, TPrimaryKey = string | number | Date | ObjectID> {
   manager: EntityManager;
@@ -85,7 +85,11 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
 
   async add(item: TEntity) {
     const repository = this.manager.getRepository(this.type);
-    const result = await repository.insert(item);
+    if (repository.hasId(item)) {
+      throw new ValidationError('', ValidationErrorCodes.InsertExistingItemError);
+    }
+
+    const result = await repository.save(item);
 
     return result;
   }
