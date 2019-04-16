@@ -2,7 +2,8 @@
 
 export const MiscellaneousErrorCdes = {
   UnknownError: 10000,
-  NotImplementedError: 10001
+  NotImplementedError: 10001,
+  ItemNotFound: 10002
 };
 
 export const PermissionErrorCdes = {

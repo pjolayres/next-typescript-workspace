@@ -8,7 +8,7 @@ import EventItem from '../../entities/event-item';
 import EventRegistration from '../../entities/event-registration';
 
 const seeder1 = async (entityManager: EntityManager, databaseMetadata: DatabaseMetadata) => {
-  if (databaseMetadata.Version >= 1) {
+  if (databaseMetadata.Version >= 1 || process.env.NODE_ENV === 'test') {
     return databaseMetadata;
   }
 

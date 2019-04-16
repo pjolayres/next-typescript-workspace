@@ -1,34 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<div
-  className="jsx-3170664004"
->
-  <nav
-    className="jsx-4078471715"
-  >
-    <ul
-      className="jsx-4078471715"
-    >
-      <li
-        className="jsx-4078471715"
-      >
+<div>
+  <nav>
+    <ul>
+      <li>
         <a
-          className="jsx-4078471715"
           href="/"
           onClick={[Function]}
         >
           Home
         </a>
       </li>
-      <ul
-        className="jsx-4078471715"
-      >
-        <li
-          className="jsx-4078471715"
-        >
+      <ul>
+        <li>
           <a
-            className="jsx-4078471715"
             href="https://github.com/segmentio/create-next-app"
             onClick={[Function]}
           >
@@ -37,82 +23,145 @@ exports[`renders correctly 1`] = `
         </li>
       </ul>
     </ul>
+    <style
+      jsx={true}
+    >
+      
+      :global(body) {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Avenir Next, Avenir, Helvetica, sans-serif;
+      }
+      nav {
+        text-align: center;
+      }
+      ul {
+        display: flex;
+        justify-content: space-between;
+      }
+      nav &gt; ul {
+        padding: 4px 16px;
+      }
+      li {
+        display: flex;
+        padding: 6px 8px;
+      }
+      a {
+        color: #067df7;
+        text-decoration: none;
+        font-size: 13px;
+      }
+    
+    </style>
   </nav>
   <div
-    className="jsx-3170664004 hero"
+    className="hero"
   >
     <h1
-      className="jsx-3170664004 title"
+      className="title"
     />
     <p
-      className="jsx-3170664004 description"
+      className="description"
     >
       To get started, edit 
-      <code
-        className="jsx-3170664004"
-      >
+      <code>
         pages/index.js
       </code>
        and save to reload.
     </p>
     <div
-      className="jsx-3170664004 row"
+      className="row"
     >
       <a
-        className="jsx-3170664004 card"
+        className="card"
         href="https://github.com/zeit/next.js#getting-started"
         onClick={[Function]}
       >
-        <h3
-          className="jsx-3170664004"
-        >
+        <h3>
           Getting Started →
         </h3>
-        <p
-          className="jsx-3170664004"
-        >
+        <p>
           Learn more about Next on Github and in their examples
         </p>
       </a>
       <a
-        className="jsx-3170664004 card"
+        className="card"
         href="https://open.segment.com/create-next-app"
         onClick={[Function]}
       >
-        <h3
-          className="jsx-3170664004"
-        >
+        <h3>
           Examples →
         </h3>
-        <p
-          className="jsx-3170664004"
-        >
+        <p>
           Find other example boilerplates on the 
-          <code
-            className="jsx-3170664004"
-          >
+          <code>
             create-next-app
           </code>
            site
         </p>
       </a>
       <a
-        className="jsx-3170664004 card"
+        className="card"
         href="https://github.com/segmentio/create-next-app"
         onClick={[Function]}
       >
-        <h3
-          className="jsx-3170664004"
-        >
+        <h3>
           Create Next App →
         </h3>
-        <p
-          className="jsx-3170664004"
-        >
+        <p>
           Was this tool helpful? Let us know how we can improve it
         </p>
       </a>
     </div>
   </div>
+  <style
+    jsx={true}
+  >
+    
+        .hero {
+          width: 100%;
+          color: #333;
+        }
+        .title {
+          margin: 0;
+          width: 100%;
+          padding-top: 80px;
+          line-height: 1.15;
+          font-size: 48px;
+        }
+        .title,
+        .description {
+          text-align: center;
+        }
+        .row {
+          max-width: 880px;
+          margin: 80px auto 40px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+        }
+        .card {
+          padding: 18px 18px 24px;
+          width: 220px;
+          text-align: left;
+          text-decoration: none;
+          color: #434343;
+          border: 1px solid #9b9b9b;
+        }
+        .card:hover {
+          border-color: #067df7;
+        }
+        .card h3 {
+          margin: 0;
+          color: #067df7;
+          font-size: 18px;
+        }
+        .card p {
+          margin: 0;
+          padding: 12px 0 0;
+          font-size: 13px;
+          color: #333;
+        }
+      
+  </style>
 </div>
 `;

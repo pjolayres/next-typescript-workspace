@@ -64,7 +64,7 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     return result;
   }
 
-  async getItemViews(options?: FetchListOptions<TEntity>) {
+  async getItemViews(_options?: FetchListOptions<TEntity>) {
     // TODO: Implemented when views are available
 
     throw new NotImplementedError('Not yet implemented.');
@@ -77,7 +77,7 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     return result;
   }
 
-  async getViewById(options?: FetchListOptions<TEntity>) {
+  async getViewById(_id: TPrimaryKey) {
     // TODO: Implemented when views are available
 
     throw new NotImplementedError('Not yet implemented.');

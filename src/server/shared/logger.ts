@@ -7,7 +7,7 @@ const { combine, timestamp, colorize, splat, printf, errors, json } = format;
 
 const date = moment();
 const fileTimestamp = date.format('YYYY-MM-DD_HH-mm-ss');
-const defaultConsoleLogLevel = 'debug';
+const defaultConsoleLogLevel = process.env.NODE_ENV === 'test' ? 'error' : 'debug';
 const defaultFileLogLevel = 'error';
 
 interface LogLevelsType {

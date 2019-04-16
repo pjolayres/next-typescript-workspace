@@ -1,4 +1,5 @@
-import { createConnection, ConnectionOptions } from 'typeorm';
+import 'reflect-metadata';
+import { createConnection, ConnectionOptions, Connection } from 'typeorm';
 
 import logger, { LogLevel, LogLevels } from '../shared/logger';
 
@@ -8,32 +9,30 @@ export default async () => {
   try {
     logger.info('Initializing database.');
 
-    const ormconfig = require('../../../ormconfig.json');
+    let connection!: Connection;
 
     if (process.env.NODE_ENV === 'test') {
-      const config = {
-        ...ormconfig,
-        type: 'sqlite',
-        database: ':memory:',
-        synchronize: true,
-        logging: true
-      } as ConnectionOptions;
+      const config = require('../../../ormconfig.test.json') as ConnectionOptions;
 
-      await createConnection(config);
+      connection = await createConnection(config);
     } else {
       const config = {
-        ...ormconfig,
+        ...require('../../../ormconfig.json'),
         logging: LogLevel >= LogLevels.Debug
       } as ConnectionOptions;
 
-      await createConnection(config);
+      connection = await createConnection(config);
     }
 
     await seedDatabase();
 
     logger.info('Database initialized.');
+
+    return connection;
   } catch (ex) {
     logger.error('Failed to initialize database.');
     logger.error(ex);
+
+    throw ex;
   }
 };
