@@ -7,6 +7,6 @@ const localization = new NextI18Next({
   localePath: 'src/static/locales'
 });
 
-export const { appWithTranslation, withNamespaces } = localization;
+export const { appWithTranslation, withNamespaces, Link, Router } = localization;
 
 export default localization;
