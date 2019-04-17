@@ -1,14 +1,16 @@
 module.exports = {
   roots: ['<rootDir>'],
   transform: {
-    '^.+\\.tsx?$': 'babel-jest'
+    '^.+\\.tsx?$': 'ts-jest'
   },
-  // testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   testRegex: '((/__tests__/.*)?(?<!\\.api|ui)\\.(test|api))\\.tsx?$', // Excludes .api.test.ts
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   globals: {
-    'babel-jest': {
+    'ts-jest': {
       tsConfig: 'tsconfig.server.json'
     }
-  }
+  },
+  setupFiles: [
+    'reflect-metadata'
+  ]
 };

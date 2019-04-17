@@ -7,7 +7,7 @@ import nextI18NextMiddleware from 'next-i18next/middleware';
 import localization from '../../shared/localization';
 import apiv1 from '../api/v1';
 import redirects from '../redirects';
-import Utilities from '../shared/utilities';
+import ServerUtilities from '../shared/server-utilities';
 
 const contentConfig = (app: Express, server: nextServer.Server) => {
   // Setup redirects
@@ -17,10 +17,10 @@ const contentConfig = (app: Express, server: nextServer.Server) => {
   if (process.env.LOG_LEVEL === 'debug') {
     app.use((req, res, next) => {
       const requestId = `[${uuid()} - ${req.method.toUpperCase()}] ${req.originalUrl}`;
-      const timer = Utilities.startTimer(requestId);
+      const timer = ServerUtilities.startTimer(requestId);
 
       onHeaders(res, () => {
-        Utilities.stopTimer(timer);
+        ServerUtilities.stopTimer(timer);
       });
 
       next();

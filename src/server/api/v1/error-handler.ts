@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ApiResponse } from '../../../types';
+import { ApiResponse } from '../../../../types';
 import logger from '../../shared/logger';
 import { CustomError, NotImplementedError, NotAuthorizedError, ValidationError, ErrorCodes } from '../../../shared/errors';
 
@@ -11,7 +11,7 @@ export default (req: Request, res: Response, ex: any, handleDefault: boolean) =>
   let isHandled = false;
 
   if (customError) {
-    let code: number | null = null;
+    let code: number = 400;
     let status: string | null = null;
 
     if (customError instanceof NotAuthorizedError) {
@@ -25,7 +25,7 @@ export default (req: Request, res: Response, ex: any, handleDefault: boolean) =>
       status = 'Bad Request';
     }
 
-    if (code && status) {
+    if (status) {
       const response: ApiResponse = {
         success: false,
         status,
@@ -33,7 +33,7 @@ export default (req: Request, res: Response, ex: any, handleDefault: boolean) =>
         errorCode: ex.errorCode
       };
 
-      res.status(400).json(response);
+      res.status(code).json(response);
 
       isHandled = true;
     }

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": ["dom", "es2017"],
     "module": "esnext",
     "moduleResolution": "node",
@@ -14,13 +14,12 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "target": "esnext",
-    "typeRoots": [ "./src/types", "./node_modules/@types"]
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "exclude": [
-    "src/server/**/*"
-  ],
-  "include": [
-    "src/**/*"
-  ]
+  "exclude": ["src/server/**/*"],
+  "include": ["src/**/*"]
 }

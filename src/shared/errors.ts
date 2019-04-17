@@ -1,8 +1,10 @@
 // tslint:disable: max-classes-per-file
 
-export const MiscellaneousErrorCdes = {
+export const MiscellaneousErrorCodes = {
   UnknownError: 10000,
-  NotImplementedError: 10001
+  NotImplementedError: 10001,
+  ItemNotFound: 10002,
+  UpdateOutdatedRecord: 10003
 };
 
 export const PermissionErrorCdes = {
@@ -11,11 +13,13 @@ export const PermissionErrorCdes = {
 
 export const ValidationErrorCodes = {
   ValidationError: 30000,
-  InvalidEmail: 30001
+  InvalidEmail: 30001,
+  InsertExistingItemError: 30002,
+  RecordDoesNotExist: 30003
 };
 
 export const ErrorCodes = {
-  ...MiscellaneousErrorCdes,
+  ...MiscellaneousErrorCodes,
   ...PermissionErrorCdes,
   ...ValidationErrorCodes
 };
@@ -59,5 +63,17 @@ export class ValidationError extends Error implements CustomError {
     this.name = this.constructor.name;
     this.errorCode = errorCode || ErrorCodes.ValidationError;
     Error.captureStackTrace(this, ValidationError);
+  }
+}
+
+export class ServerError extends Error implements CustomError {
+  errorCode: number;
+
+  constructor(message: string | undefined, errorCode?: number) {
+    super(message);
+
+    this.name = this.constructor.name;
+    this.errorCode = errorCode || ErrorCodes.UnknownError;
+    Error.captureStackTrace(this, ServerError);
   }
 }

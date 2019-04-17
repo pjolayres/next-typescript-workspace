@@ -7,8 +7,31 @@ const { combine, timestamp, colorize, splat, printf, errors, json } = format;
 
 const date = moment();
 const fileTimestamp = date.format('YYYY-MM-DD_HH-mm-ss');
-const defaultConsoleLogLevel = 'debug';
+const defaultConsoleLogLevel = process.env.NODE_ENV === 'test' ? 'error' : 'debug';
 const defaultFileLogLevel = 'error';
+
+interface LogLevelsType {
+  [key: string]: number;
+}
+
+export const LogLevels: LogLevelsType = {
+  Error: 0,
+  Warn: 1,
+  Info: 2,
+  Verbose: 3,
+  Debug: 4,
+  Silly: 5
+};
+
+let logLevel = LogLevels.Error;
+
+Object.keys(LogLevels).forEach(key => {
+  if (key.toUpperCase() === (process.env.LOG_LEVEL || '').toUpperCase()) {
+    logLevel = LogLevels[key];
+  }
+});
+
+export const LogLevel = logLevel;
 
 fs.mkdir('./logs', () => {
   /* no-op */
@@ -38,16 +61,6 @@ const logger = winston.createLogger({
 });
 
 logger.log('info', `Logger set to "${logger.transports[0].level}"`);
-
-/*
-Logging levels are as follows:
-  error: 0
-  warn: 1
-  info: 2
-  verbose: 3
-  debug: 4
-  silly: 5
-*/
 
 export default {
   debug: (message: any, ...args: any[]) => {

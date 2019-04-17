@@ -5,6 +5,7 @@ import logger from './shared/logger';
 import headersConfig from './config/headers-config';
 import parsersConfig from './config/parsers-config';
 import contentConfig from './config/content-config';
+import databaseInitializer from './config/database-initializer';
 
 logger.info(`Environment: ${process.env.NODE_ENV}`);
 logger.info('☕️  Initializing server');
@@ -13,7 +14,7 @@ const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const server = nextServer({ dir: './src', dev });
 
-server.prepare().then(() => {
+server.prepare().then(async () => {
   const app = express();
 
   app.get('/health', (_req, res) => {
@@ -31,6 +32,8 @@ server.prepare().then(() => {
   headersConfig(app);
   parsersConfig(app);
   contentConfig(app, server);
+
+  await databaseInitializer();
 
   app.listen(port, (err: any) => {
     if (err) {
