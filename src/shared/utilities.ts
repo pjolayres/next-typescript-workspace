@@ -1,7 +1,7 @@
 import { FetchListOptions, SearchableEntityProperties } from '../../types';
 
 const Utilities = {
-  cleanSplit: (text: string | null | undefined, delimiter: string, trim: boolean = true) => {
+  cleanSplit: (text: string | null | undefined, delimiter: string = ',', trim: boolean = true) => {
     if (!text) {
       return new Array<string>();
     }
