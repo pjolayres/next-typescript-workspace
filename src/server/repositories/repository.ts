@@ -2,7 +2,8 @@ import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions,
 
 import { ListData, FetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
-import { NotImplementedError, ValidationError, ValidationErrorCodes } from '../../shared/errors';
+import { NotImplementedError, ValidationError, ValidationErrorCodes, MiscellaneousErrorCodes } from '../../shared/errors';
+import transactionScope from '../shared/transaction-scope';
 
 export default class Repository<TEntity, TPrimaryKey = string | number | Date | ObjectID> {
   manager: EntityManager;
@@ -97,7 +98,40 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
   async update(item: TEntity) {
     const repository = this.manager.getRepository(this.type);
     const id = repository.getId(item);
-    const result = await repository.update(id, item);
+
+    const typeMetadata = this.manager.connection.getMetadata(this.type);
+    const primaryColumn = typeMetadata.columns.find(column => column.isPrimary);
+    const versionColumn = typeMetadata.columns.find(column => column.isVersion);
+
+    if (!primaryColumn) {
+      throw new Error('The entity does not have any primary columns.');
+    }
+
+    const filter = {
+      [primaryColumn.propertyName]: id
+    };
+
+    const entityWithTimestamp = item as any;
+    if (versionColumn) {
+      filter[versionColumn.propertyName] = entityWithTimestamp[versionColumn.propertyName];
+    }
+
+    let result: TEntity | undefined;
+    await transactionScope(async transactionManager => {
+      const transactionRepository = transactionManager.getRepository(this.type);
+
+      const existingItem = await transactionRepository.findOne(id as TPrimaryKey);
+      if (!existingItem) {
+        throw new NotImplementedError('Item does not exist.', ValidationErrorCodes.RecordDoesNotExist);
+      }
+      if (versionColumn && (existingItem as any)[versionColumn.propertyName] !== (item as any)[versionColumn.propertyName]) {
+        throw new ValidationError('Cannot update outdated record', MiscellaneousErrorCodes.UpdateOutdatedRecord);
+      }
+
+      await repository.update(filter as any, item);
+
+      result = await this.getById(id);
+    }, this.manager);
 
     return result;
   }

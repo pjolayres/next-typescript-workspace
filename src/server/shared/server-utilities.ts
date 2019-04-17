@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { EntityManager, getManager, ObjectType } from 'typeorm';
 
 import logger from './logger';
 
@@ -28,6 +29,12 @@ const ServerUtilities = {
     }
 
     return duration;
+  },
+  createEntity: <TEntity>(type: ObjectType<TEntity>, obj: any, manager?: EntityManager) => {
+    const entityManager = manager ? manager : getManager();
+    const result = entityManager.create<TEntity>(type, obj);
+
+    return result;
   }
 };
 

@@ -4,14 +4,36 @@ import databaseInitializer from '../config/database-initializer';
 import EventItem from '../entities/event-item';
 import EventRegistration from '../entities/event-registration';
 import { SearchableEntityProperties } from '../../../types';
+import { ValidationError, ValidationErrorCodes, MiscellaneousErrorCodes } from '../../shared/errors';
 
 import Repository from './repository';
-import { ValidationError, ValidationErrorCodes } from '../../shared/errors';
 
 let sampleMultipleEventItems: EventItem[];
 let sampleEventItemWithRegistrations: EventItem;
+let sampleTwinEventItem1: EventItem;
+let sampleTwinEventItem2: EventItem;
 
 const initializeSampleData = () => {
+  sampleTwinEventItem1 = new EventItem();
+  sampleTwinEventItem1.Title = 'Title 1';
+  sampleTwinEventItem1.StartDate = new Date(2019, 1, 1);
+  sampleTwinEventItem1.EndDate = new Date(2019, 1, 2);
+  sampleTwinEventItem1.Summary = 'Summary 1';
+  sampleTwinEventItem1.Body = 'Lorem ipsum dolor sit amet 1';
+  sampleTwinEventItem1.Address = 'Address 1';
+  sampleTwinEventItem1.Latitude = 12.3456;
+  sampleTwinEventItem1.Longitude = 65.4321;
+
+  sampleTwinEventItem2 = new EventItem();
+  sampleTwinEventItem2.Title = 'Title 1';
+  sampleTwinEventItem2.StartDate = new Date(2019, 1, 1);
+  sampleTwinEventItem2.EndDate = new Date(2019, 1, 2);
+  sampleTwinEventItem2.Summary = 'Summary 1';
+  sampleTwinEventItem2.Body = 'Lorem ipsum dolor sit amet 1';
+  sampleTwinEventItem2.Address = 'Address 1';
+  sampleTwinEventItem2.Latitude = 12.3456;
+  sampleTwinEventItem2.Longitude = 65.4321;
+
   const eventItem1 = new EventItem();
   eventItem1.Title = 'Title 1';
   eventItem1.StartDate = new Date(2019, 1, 1);
@@ -143,8 +165,7 @@ describe('Repository', () => {
     let error: Error | null = null;
     try {
       await eventItemsRepository.add(savedItem);
-    }
-    catch (ex) {
+    } catch (ex) {
       error = ex;
     }
 
@@ -174,6 +195,42 @@ describe('Repository', () => {
     expect(updatedItem).toBeDefined();
     expect(updatedItem!.EventItemId).toBe(id);
     expect(updatedItem!.Title).toBe(newTitle);
+  });
+
+  test('update() with optimistic concurrency error', async () => {
+    const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
+
+    // Save initial item
+    const savedItem = await eventItemsRepository.add(sampleTwinEventItem1);
+
+    expect(savedItem.Title).toBe(sampleTwinEventItem1.Title);
+
+    // Update item concurrently
+    const newTitle1 = 'Updated Title 1';
+    sampleTwinEventItem2.EventItemId = savedItem.EventItemId;
+    sampleTwinEventItem2.Title = newTitle1;
+    sampleTwinEventItem2.Timestamp = savedItem.Timestamp;
+
+    const concurrentlyUpdatedItem = await eventItemsRepository.update(sampleTwinEventItem2);
+
+    expect(concurrentlyUpdatedItem!.EventItemId).toBe(savedItem.EventItemId);
+    expect(concurrentlyUpdatedItem!.Title).toBe(newTitle1);
+    expect(concurrentlyUpdatedItem!.Timestamp).not.toBe(savedItem.Timestamp);
+
+    // Update item with outdated timestamp
+    const newTitle2 = 'Updated Title 2';
+    savedItem.Title = newTitle2;
+
+    let error: ValidationError | undefined | null = null;
+    try {
+      await eventItemsRepository.update(savedItem);
+    }
+    catch (ex) {
+      error = ex as ValidationError;
+    }
+
+    expect(error).toBeDefined();
+    expect(error!.errorCode).toBe(MiscellaneousErrorCodes.UpdateOutdatedRecord);
   });
 
   test('delete()', async () => {
