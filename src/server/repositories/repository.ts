@@ -139,6 +139,9 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
   async delete(item: TEntity) {
     const repository = this.manager.getRepository(this.type);
     const id = repository.getId(item);
+
+    // TODO: Throw NotFoundError if the record does not exist.
+
     const result = await repository.delete(id);
 
     return result;
@@ -146,6 +149,10 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
 
   async deleteById(id: TPrimaryKey) {
     const repository = this.manager.getRepository(this.type);
+
+    // TODO: Add optimistic concurrency check
+    // TODO: Throw NotFoundError if the record does not exist.
+
     const result = await repository.delete(id);
 
     return result;
