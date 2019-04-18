@@ -9,7 +9,10 @@
             "request": "attach",
             "name": "Local: Attach to Node",
             "port": 9229,
-            "restart": true
+            "restart": true,
+            "sourceMapPathOverrides": {
+                "webpack:///*": "${workspaceRoot}/src/*"
+            }
         },
         {
             "type": "node",

@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
 
   render() {
     const rtlLanguageCodes = ['ar', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'];
-    const lang = (this.props.__NEXT_DATA__.props.initialLanguage || 'en').trim();
+    const lang = (this.props && this.props.__NEXT_DATA__ && this.props.__NEXT_DATA__.props && this.props.__NEXT_DATA__.props.initialLanguage || 'en').trim();
     const dir = !!rtlLanguageCodes.find(culture => lang.startsWith(culture)) ? 'rtl' : 'ltr';
 
     return (
