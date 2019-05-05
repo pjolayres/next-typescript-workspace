@@ -6,10 +6,11 @@ import nextI18NextMiddleware from 'next-i18next/middleware';
 
 import localization from '../../shared/localization';
 import apiv1 from '../api/v1';
+import graphql from '../api/graphql';
 import redirects from '../redirects';
 import ServerUtilities from '../shared/server-utilities';
 
-const contentConfig = (app: Express, server: nextServer.Server) => {
+const contentConfig = async (app: Express, server: nextServer.Server) => {
   // Setup redirects
   redirects(app);
 
@@ -29,6 +30,9 @@ const contentConfig = (app: Express, server: nextServer.Server) => {
 
   // Setup REST API
   apiv1(app);
+
+  // Setup GraphQL API
+  await graphql(app);
 
   // Serve content
   const handle = server.getRequestHandler();

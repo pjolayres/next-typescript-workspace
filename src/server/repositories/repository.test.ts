@@ -112,12 +112,12 @@ describe('Repository', () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
     const eventRegistrationsRepository = new Repository<EventRegistration, string>(EventRegistration, entityManager);
 
-    const eventItems = await eventItemsRepository.getItems();
+    const eventItems = await eventItemsRepository.getPaginatedItems();
 
     expect(eventItems.totalItems).toBe(0);
     expect(eventItems.items.length).toBe(0);
 
-    const eventRegistration = await eventRegistrationsRepository.getItems();
+    const eventRegistration = await eventRegistrationsRepository.getPaginatedItems();
 
     expect(eventRegistration.totalItems).toBe(0);
     expect(eventRegistration.items.length).toBe(0);
@@ -126,7 +126,7 @@ describe('Repository', () => {
   test('In-memory database is cleared after each test', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
-    const eventItems = await eventItemsRepository.getItems();
+    const eventItems = await eventItemsRepository.getPaginatedItems();
 
     expect(eventItems.totalItems).toBe(0);
     expect(eventItems.items.length).toBe(0);
@@ -138,14 +138,14 @@ describe('Repository', () => {
 
     await eventItemsRepository.add(sampleEventItemWithRegistrations);
 
-    const eventItems = await eventItemsRepository.getItems();
+    const eventItems = await eventItemsRepository.getPaginatedItems();
 
     expect(eventItems.totalItems).toBe(1);
     expect(eventItems.items.length).toBe(1);
     expect(eventItems.items[0].EventItemId.length).toBeGreaterThan(0);
     expect(eventItems.items[0].Title).toBe(sampleEventItemWithRegistrations.Title);
 
-    const eventRegistrations = await eventRegistrationsRepository.getItems();
+    const eventRegistrations = await eventRegistrationsRepository.getPaginatedItems();
 
     expect(eventRegistrations.totalItems).toBe(2);
     expect(eventRegistrations.items.length).toBe(2);
@@ -243,7 +243,7 @@ describe('Repository', () => {
 
     await eventItemsRepository.delete(loadedItem!);
 
-    const eventItems = await eventItemsRepository.getItems();
+    const eventItems = await eventItemsRepository.getPaginatedItems();
 
     expect(eventItems.totalItems).toBe(0);
     expect(eventItems.items.length).toBe(0);
@@ -259,7 +259,7 @@ describe('Repository', () => {
 
     await eventItemsRepository.deleteById(loadedItem!.EventItemId!);
 
-    const eventItems = await eventItemsRepository.getItems();
+    const eventItems = await eventItemsRepository.getPaginatedItems();
 
     expect(eventItems.totalItems).toBe(0);
     expect(eventItems.items.length).toBe(0);
@@ -276,14 +276,14 @@ describe('Repository', () => {
     expect(eventItem!.EventItemId).toBe(savedItem.EventItemId);
   });
 
-  test('getItems()', async () => {
+  test('getPaginatedItems()', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems();
+    const queryResults = await eventItemsRepository.getPaginatedItems();
 
     expect(queryResults.totalItems).toBe(3);
     expect(queryResults.items.length).toBe(3);
@@ -295,14 +295,14 @@ describe('Repository', () => {
     expect(queryResults.items[2].Title).toBe(sampleMultipleEventItems[2].Title);
   });
 
-  test('getItems({ skip: 1, take: 1 })', async () => {
+  test('getPaginatedItems({ skip: 1, take: 1 })', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems({ skip: 1, take: 1 });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ skip: 1, take: 1 });
 
     expect(queryResults.skip).toBe(1);
     expect(queryResults.take).toBe(1);
@@ -311,14 +311,14 @@ describe('Repository', () => {
     expect(queryResults.items[0].Title).toBe(sampleMultipleEventItems[1].Title);
   });
 
-  test('getItems({ skip: 1, take: 2 })', async () => {
+  test('getPaginatedItems({ skip: 1, take: 2 })', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems({ skip: 1, take: 2 });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ skip: 1, take: 2 });
 
     expect(queryResults.skip).toBe(1);
     expect(queryResults.take).toBe(2);
@@ -328,14 +328,14 @@ describe('Repository', () => {
     expect(queryResults.items[1].Title).toBe(sampleMultipleEventItems[2].Title);
   });
 
-  test('getItems({ skip: 1, take: 2, order: { StartDate: "ASC" } })', async () => {
+  test('getPaginatedItems({ skip: 1, take: 2, order: { StartDate: "ASC" } })', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems({ skip: 1, take: 2, order: { StartDate: 'ASC' } });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ skip: 1, take: 2, order: { StartDate: 'ASC' } });
 
     expect(queryResults.skip).toBe(1);
     expect(queryResults.take).toBe(2);
@@ -345,14 +345,14 @@ describe('Repository', () => {
     expect(queryResults.items[1].Title).toBe(sampleMultipleEventItems[2].Title);
   });
 
-  test('getItems({ skip: 1, take: 2, order: { StartDate: "DESC" } })', async () => {
+  test('getPaginatedItems({ skip: 1, take: 2, order: { StartDate: "DESC" } })', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems({ skip: 1, take: 2, order: { StartDate: 'DESC' } });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ skip: 1, take: 2, order: { StartDate: 'DESC' } });
 
     expect(queryResults.skip).toBe(1);
     expect(queryResults.take).toBe(2);
@@ -362,14 +362,14 @@ describe('Repository', () => {
     expect(queryResults.items[1].Title).toBe(sampleMultipleEventItems[0].Title);
   });
 
-  test('getItems() with single searchText and single searchField', async () => {
+  test('getPaginatedItems() with single searchText and single searchField', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
     await eventItemsRepository.add(sampleMultipleEventItems[1]);
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
-    const queryResults = await eventItemsRepository.getItems({ searchText: 'Title', searchFields: ['Title'] });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ searchText: 'Title', searchFields: ['Title'] });
 
     expect(queryResults.totalItems).toBe(2);
     expect(queryResults.items.length).toBe(2);
@@ -377,7 +377,7 @@ describe('Repository', () => {
     expect(queryResults.items[1].Title).toBe(sampleMultipleEventItems[1].Title);
   });
 
-  test('getItems() with single searchText and multiple searchFields', async () => {
+  test('getPaginatedItems() with single searchText and multiple searchFields', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
@@ -385,7 +385,7 @@ describe('Repository', () => {
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
     const searchFields = ['Title', 'Summary'] as Array<keyof SearchableEntityProperties<EventItem>>;
-    const queryResults = await eventItemsRepository.getItems({ searchText: 'Temp', searchFields });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ searchText: 'Temp', searchFields });
 
     expect(queryResults.totalItems).toBe(2);
     expect(queryResults.items.length).toBe(2);
@@ -393,7 +393,7 @@ describe('Repository', () => {
     expect(queryResults.items[1].Title).toBe(sampleMultipleEventItems[2].Title);
   });
 
-  test('getItems() with multiple searchText and multiple searchFields', async () => {
+  test('getPaginatedItems() with multiple searchText and multiple searchFields', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
@@ -401,14 +401,14 @@ describe('Repository', () => {
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
     const searchFields = ['Title', 'Summary'] as Array<keyof SearchableEntityProperties<EventItem>>;
-    const queryResults = await eventItemsRepository.getItems({ searchText: 'Title Temp', searchFields });
+    const queryResults = await eventItemsRepository.getPaginatedItems({ searchText: 'Title Temp', searchFields });
 
     expect(queryResults.totalItems).toBe(3);
     expect(queryResults.items.length).toBe(3);
     expect(queryResults.items[0].Title).toBe(sampleMultipleEventItems[0].Title);
   });
 
-  test('getItems({ skip: 1, take: 1, order: { StartDate: "ASC" }}) with multiple searchText and multiple searchFields', async () => {
+  test('getPaginatedItems({ skip: 1, take: 1, order: { StartDate: "ASC" }}) with multiple searchText and multiple searchFields', async () => {
     const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
 
     await eventItemsRepository.add(sampleMultipleEventItems[0]);
@@ -416,7 +416,7 @@ describe('Repository', () => {
     await eventItemsRepository.add(sampleMultipleEventItems[2]);
 
     const searchFields = ['Title', 'Summary'] as Array<keyof SearchableEntityProperties<EventItem>>;
-    const queryResults = await eventItemsRepository.getItems({
+    const queryResults = await eventItemsRepository.getPaginatedItems({
       skip: 2,
       take: 1,
       order: {

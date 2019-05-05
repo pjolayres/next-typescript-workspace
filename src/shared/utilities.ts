@@ -1,4 +1,4 @@
-import { FetchListOptions, SearchableEntityProperties } from '../../types';
+import { FetchListOptions, SearchableEntityProperties, PaginatedFetchListOptions } from '../../types';
 
 const Utilities = {
   cleanSplit: (text: string | null | undefined, delimiter: string = ',', trim: boolean = true) => {
@@ -15,16 +15,6 @@ const Utilities = {
   },
   parseFetchListOptions: <TEntity>(query: any) => {
     const options: FetchListOptions<TEntity> = {};
-
-    const skip = parseInt(query.skip, 10);
-    if (!isNaN(skip)) {
-      options.skip = skip;
-    }
-
-    const take = parseInt(query.take, 10);
-    if (!isNaN(take)) {
-      options.take = take;
-    }
 
     const sortAscendingList = Utilities.cleanSplit(query.sortAscending as string, ',') as Array<keyof TEntity>;
     const sortDescendingList = Utilities.cleanSplit(query.sortDescending as string, ',') as Array<keyof TEntity>;
@@ -50,6 +40,21 @@ const Utilities = {
     const searchFields = Utilities.cleanSplit(query.searchFields as string, ',') as Array<keyof SearchableEntityProperties<TEntity>>;
     if (searchFields.length > 0) {
       options.searchFields = searchFields;
+    }
+
+    return options;
+  },
+  parsePaginatedFetchListOptions: <TEntity>(query: any) => {
+    const options: PaginatedFetchListOptions<TEntity> = Utilities.parseFetchListOptions(query);
+
+    const skip = parseInt(query.skip, 10);
+    if (!isNaN(skip)) {
+      options.skip = skip;
+    }
+
+    const take = parseInt(query.take, 10);
+    if (!isNaN(take)) {
+      options.take = take;
     }
 
     return options;
