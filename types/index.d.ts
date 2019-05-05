@@ -21,7 +21,7 @@ interface LocalizedNextFunctionComponent<P = LocalizedProps, IP = LocalizationIn
 
 type SearchableEntityProperties<T> = Pick<T, { [K in keyof T]: T[K] extends string ? K : never }[keyof T]>;
 
-interface FetchListOptions<TEntity>  {
+interface FetchListOptions<TEntity> {
   order?: { [P in keyof TEntity]?: 'ASC' | 'DESC' | 1 | -1 };
   searchText?: string;
   searchFields?: Array<keyof SearchableEntityProperties<TEntity>>;

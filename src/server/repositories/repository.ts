@@ -52,7 +52,7 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     }
 
     if (options && options.filters) {
-      filters = filters.concat(options.filters);
+      filters = [...filters, ...options.filters];
     }
 
     if (filters.length > 0) {
@@ -97,7 +97,7 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     }
 
     if (options && options.filters) {
-      filters = filters.concat(options.filters);
+      filters = [...filters, ...options.filters];
     }
 
     if (filters.length > 0) {
