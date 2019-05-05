@@ -44,7 +44,7 @@ describe('Utilities.cleanSplit()', () => {
   });
 });
 
-describe('Utilities.parseFetchListOptions()', () => {
+describe('Utilities.parsePaginatedFetchListOptions()', () => {
   test('Standard usage', () => {
     const query = {
       skip: '1',
@@ -55,7 +55,7 @@ describe('Utilities.parseFetchListOptions()', () => {
       searchFields: 'Prop3,Prop5'
     };
 
-    const options = Utilities.parseFetchListOptions<EventItem>(query);
+    const options = Utilities.parsePaginatedFetchListOptions<EventItem>(query);
 
     const order = options.order as any;
 
@@ -79,7 +79,7 @@ describe('Utilities.parseFetchListOptions()', () => {
       sortAscending: 'Prop1'
     };
 
-    const options = Utilities.parseFetchListOptions<EventItem>(query);
+    const options = Utilities.parsePaginatedFetchListOptions<EventItem>(query);
 
     const order = options.order as any;
 

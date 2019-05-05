@@ -1,6 +1,6 @@
 import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID } from 'typeorm';
 
-import { ListData, FetchListOptions } from '../../../types';
+import { ListData, FetchListOptions, PaginatedFetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
 import { NotImplementedError, ValidationError, ValidationErrorCodes, MiscellaneousErrorCodes } from '../../shared/errors';
 import transactionScope from '../shared/transaction-scope';
@@ -19,7 +19,53 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     }
   }
 
+  getPrimaryKey(item: TEntity) {
+    const repository = this.manager.getRepository(this.type);
+    const result = repository.getId(item);
+
+    return result;
+  }
+
   async getItems(options?: FetchListOptions<TEntity>) {
+    const queryOptions: FindManyOptions<TEntity> = {};
+
+    if (options && options.order) {
+      queryOptions.order = options.order;
+    }
+
+    let filters: Array<FindConditions<TEntity>> = [];
+
+    if (options && options.searchFields) {
+      const searchTokens = Utilities.cleanSplit(options.searchText, ' ');
+
+      if (searchTokens.length > 0) {
+        options.searchFields.forEach(key => {
+          searchTokens.forEach(searchToken => {
+            const filter: FindConditions<TEntity> = {};
+
+            filter[key] = new FindOperator<FindConditions<string>>('like', `%${searchToken}%` as string) as any;
+
+            filters.push(filter);
+          });
+        });
+      }
+    }
+
+    if (options && options.filters) {
+      filters = filters.concat(options.filters);
+    }
+
+    if (filters.length > 0) {
+      queryOptions.where = filters;
+    }
+
+    const repository = this.manager.getRepository(this.type);
+    const result = await repository.find(queryOptions);
+
+    return result;
+  }
+
+  async getPaginatedItems(options?: PaginatedFetchListOptions<TEntity>) {
     const skip = Math.max(options && typeof options.skip !== 'undefined' ? options.skip : 0, 0);
     const take = Math.min(options && typeof options.take !== 'undefined' ? options.take : 20, 100);
 
@@ -32,12 +78,12 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
       queryOptions.order = options.order;
     }
 
+    let filters: Array<FindConditions<TEntity>> = [];
+
     if (options && options.searchFields) {
       const searchTokens = Utilities.cleanSplit(options.searchText, ' ');
 
       if (searchTokens.length > 0) {
-        const filters: Array<FindConditions<TEntity>> = [];
-
         options.searchFields.forEach(key => {
           searchTokens.forEach(searchToken => {
             const filter: FindConditions<TEntity> = {};
@@ -47,9 +93,15 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
             filters.push(filter);
           });
         });
-
-        queryOptions.where = filters;
       }
+    }
+
+    if (options && options.filters) {
+      filters = filters.concat(options.filters);
+    }
+
+    if (filters.length > 0) {
+      queryOptions.where = filters;
     }
 
     const repository = this.manager.getRepository(this.type);
@@ -63,6 +115,13 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     };
 
     return result;
+  }
+
+  async getItemsByIds(ids: TPrimaryKey[]) {
+    const repository = this.manager.getRepository(this.type);
+    const results = await repository.findByIds(ids);
+
+    return results;
   }
 
   async getItemViews(_options?: FetchListOptions<TEntity>) {
@@ -79,6 +138,12 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
   }
 
   async getViewById(_id: TPrimaryKey) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
+  }
+
+  async getViewsByIds(_ids: TPrimaryKey[]) {
     // TODO: Implemented when views are available
 
     throw new NotImplementedError('Not yet implemented.');

@@ -12,10 +12,10 @@ import errorHandler from './error-handler';
 export default (app: Express, urlPrefix: string) => {
   app.get(`${urlPrefix}/event-items`, async (req: Request, res: Response) => {
     try {
-      const options = Utilities.parseFetchListOptions<EventItem>(req.query);
+      const options = Utilities.parsePaginatedFetchListOptions<EventItem>(req.query);
 
       const repository = new Repository<EventItem, string>(EventItem);
-      const data = await repository.getItems(options);
+      const data = await repository.getPaginatedItems(options);
 
       const result: ApiListResponse<EventItem> = {
         success: true,
