@@ -3,7 +3,7 @@ import { buildSchema } from 'type-graphql';
 import { ApolloServer } from 'apollo-server-express';
 
 import EventItemsResolver from './resolvers/event-items-resolver';
-import EventRegistrationsResolver from './resolvers/event-registraions-resolver';
+import EventRegistrationsResolver from './resolvers/event-registrations-resolver';
 import DataLoaderMiddleware from './shared/data-loader-middleware';
 
 export default async (app: Express) => {

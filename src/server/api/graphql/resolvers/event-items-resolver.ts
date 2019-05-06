@@ -1,12 +1,14 @@
-import { Query, Args, Resolver, FieldResolver, Root, Ctx } from 'type-graphql';
+import { Query, Args, Resolver, FieldResolver, Root, Ctx, Mutation, Arg } from 'type-graphql';
 
 import EventItem from '../../../entities/event-item';
 import FetchListArgs from '../types/fetch-list-args';
+import EventItemInput from '../types/event-item-input';
 import Utilities from '../../../../shared/utilities';
 import EventRegistration from '../../../entities/event-registration';
 import { Context } from '../../../../../types';
 import EventItemsRepository from '../../../repositories/event-items-repository';
 import EventRegistrationsRepository from '../../../repositories/event-registrations-repository';
+import { NotImplementedError } from '../../../../shared/errors';
 
 @Resolver(_of => EventItem)
 export default class EventItemsResolver {
@@ -32,5 +34,12 @@ export default class EventItemsResolver {
     const result = await dataLoader.load(eventItem.EventItemId);
 
     return result;
+  }
+
+  @Mutation(_returns => EventItem)
+  async addEventItem(@Arg('eventItem') eventItemInput: EventItemInput): Promise<EventItem> {
+    // TODO: Implement
+
+    throw new NotImplementedError('Not implemented');
   }
 }
