@@ -28,6 +28,10 @@ interface FetchListOptions<TEntity> {
   filters?: Array<FindConditions<TEntity>>;
 }
 
+interface IndexedEntity {
+  [key: string]: any;
+}
+
 interface PaginatedFetchListOptions<TEntity> {
   skip?: number;
   take?: number;

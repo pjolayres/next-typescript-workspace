@@ -1,9 +1,10 @@
-import { ObjectType, Field } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
+import { DeepPartial } from 'typeorm';
 
 import EventRegistration from '../../../entities/event-registration';
 
-@ObjectType()
-export default class EventRegistrationInput implements Partial<EventRegistration> {
+@InputType()
+export default class EventRegistrationInput implements DeepPartial<EventRegistration> {
   @Field()
   EventItemId!: string;
 

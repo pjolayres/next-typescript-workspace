@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, OneToMany } from 'typeorm';
-import { ObjectType, Field, GraphQLISODateTime, Float, ID, GraphQLTimestamp } from 'type-graphql';
+import { ObjectType, Field, GraphQLISODateTime, Float, ID, Int } from 'type-graphql';
 
 import EventRegistration from './event-registration';
 
@@ -59,6 +59,6 @@ export default class EventItem {
   DateModified!: Date;
 
   @VersionColumn()
-  @Field(_type => GraphQLTimestamp)
+  @Field(_type => Int)
   Timestamp!: string;
 }

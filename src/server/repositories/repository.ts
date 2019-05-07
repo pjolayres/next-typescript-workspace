@@ -1,4 +1,4 @@
-import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID } from 'typeorm';
+import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID, DeepPartial } from 'typeorm';
 
 import { ListData, FetchListOptions, PaginatedFetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
@@ -25,6 +25,8 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
 
     return result;
   }
+
+  // Entity methods
 
   async getItems(options?: FetchListOptions<TEntity>) {
     const queryOptions: FindManyOptions<TEntity> = {};
@@ -124,12 +126,6 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     return results;
   }
 
-  async getItemViews(_options?: FetchListOptions<TEntity>) {
-    // TODO: Implemented when views are available
-
-    throw new NotImplementedError('Not yet implemented.');
-  }
-
   async getById(id: TPrimaryKey) {
     const repository = this.manager.getRepository(this.type);
     const result = await repository.findOne(id);
@@ -137,36 +133,36 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     return result;
   }
 
-  async getViewById(_id: TPrimaryKey) {
-    // TODO: Implemented when views are available
-
-    throw new NotImplementedError('Not yet implemented.');
-  }
-
-  async getViewsByIds(_ids: TPrimaryKey[]) {
-    // TODO: Implemented when views are available
-
-    throw new NotImplementedError('Not yet implemented.');
-  }
-
-  async add(item: TEntity) {
+  async add(item: TEntity | DeepPartial<TEntity>) {
     const repository = this.manager.getRepository(this.type);
-    if (repository.hasId(item)) {
+    const entity: TEntity = repository.create(item);
+
+    if (repository.hasId(entity)) {
       throw new ValidationError('', ValidationErrorCodes.InsertExistingItemError);
     }
 
-    const result = await repository.save(item);
+    const result = await repository.save(entity);
 
     return result;
   }
 
-  async update(item: TEntity) {
+  async update(item: TEntity | DeepPartial<TEntity>) {
     const repository = this.manager.getRepository(this.type);
-    const id = repository.getId(item);
+    const entity: TEntity = repository.create(item);
+    const id = repository.getId(entity);
 
     const typeMetadata = this.manager.connection.getMetadata(this.type);
     const primaryColumn = typeMetadata.columns.find(column => column.isPrimary);
     const versionColumn = typeMetadata.columns.find(column => column.isVersion);
+    const dateCreatedColumn = typeMetadata.columns.find(column => column.isCreateDate);
+    const dateModifiedColumn = typeMetadata.columns.find(column => column.isUpdateDate);
+
+    if (dateCreatedColumn && dateCreatedColumn.propertyName) {
+      delete (entity as any)[dateCreatedColumn.propertyName];
+    }
+    if (dateModifiedColumn && dateModifiedColumn.propertyName) {
+      delete (entity as any)[dateModifiedColumn.propertyName];
+    }
 
     if (!primaryColumn) {
       throw new Error('The entity does not have any primary columns.');
@@ -176,7 +172,7 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
       [primaryColumn.propertyName]: id
     };
 
-    const entityWithTimestamp = item as any;
+    const entityWithTimestamp = entity as any;
     if (versionColumn) {
       filter[versionColumn.propertyName] = entityWithTimestamp[versionColumn.propertyName];
     }
@@ -189,25 +185,24 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
       if (!existingItem) {
         throw new NotImplementedError('Item does not exist.', ValidationErrorCodes.RecordDoesNotExist);
       }
-      if (versionColumn && (existingItem as any)[versionColumn.propertyName] !== (item as any)[versionColumn.propertyName]) {
+      if (versionColumn && (existingItem as any)[versionColumn.propertyName] !== (entity as any)[versionColumn.propertyName]) {
         throw new ValidationError('Cannot update outdated record', MiscellaneousErrorCodes.UpdateOutdatedRecord);
       }
 
-      await repository.update(filter as any, item);
+      await repository.update(filter as any, entity);
 
       result = await this.getById(id);
     }, this.manager);
 
-    return result;
+    return result as TEntity;
   }
 
   async delete(item: TEntity) {
     const repository = this.manager.getRepository(this.type);
-    const id = repository.getId(item);
+    const entity: TEntity = repository.create(item);
+    const id = repository.getId(entity);
 
-    // TODO: Throw NotFoundError if the record does not exist.
-
-    const result = await repository.delete(id);
+    const result = await this.deleteById(id);
 
     return result;
   }
@@ -215,11 +210,33 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
   async deleteById(id: TPrimaryKey) {
     const repository = this.manager.getRepository(this.type);
 
-    // TODO: Add optimistic concurrency check
-    // TODO: Throw NotFoundError if the record does not exist.
+    const existingItem = await repository.findOne(id);
+    if (!existingItem) {
+      throw new ValidationError('The record does not exist', ValidationErrorCodes.RecordDoesNotExist);
+    }
 
     const result = await repository.delete(id);
 
     return result;
+  }
+
+  // View methods
+
+  async getItemViews(_options?: FetchListOptions<TEntity>) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
+  }
+
+  async getViewById(_id: TPrimaryKey) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
+  }
+
+  async getViewsByIds(_ids: TPrimaryKey[]) {
+    // TODO: Implemented when views are available
+
+    throw new NotImplementedError('Not yet implemented.');
   }
 }

@@ -8,7 +8,6 @@ import EventRegistration from '../../../entities/event-registration';
 import { Context } from '../../../../../types';
 import EventItemsRepository from '../../../repositories/event-items-repository';
 import EventRegistrationsRepository from '../../../repositories/event-registrations-repository';
-import { NotImplementedError } from '../../../../shared/errors';
 
 @Resolver(_of => EventItem)
 export default class EventItemsResolver {
@@ -38,8 +37,25 @@ export default class EventItemsResolver {
 
   @Mutation(_returns => EventItem)
   async addEventItem(@Arg('eventItem') eventItemInput: EventItemInput): Promise<EventItem> {
-    // TODO: Implement
+    const eventItemsRepository = new EventItemsRepository();
+    const result = await eventItemsRepository.add(eventItemInput);
 
-    throw new NotImplementedError('Not implemented');
+    return result;
+  }
+
+  @Mutation(_returns => EventItem)
+  async updateEventItem(@Arg('eventItem') eventItemInput: EventItemInput): Promise<EventItem> {
+    const eventItemsRepository = new EventItemsRepository();
+    const result = await eventItemsRepository.update(eventItemInput);
+
+    return result;
+  }
+
+  @Mutation(_returns => Boolean)
+  async deleteEventItem(@Arg('id') id: string): Promise<boolean> {
+    const eventItemsRepository = new EventItemsRepository();
+    await eventItemsRepository.deleteById(id);
+
+    return true;
   }
 }

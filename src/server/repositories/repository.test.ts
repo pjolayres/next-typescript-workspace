@@ -79,12 +79,10 @@ const initializeSampleData = () => {
   const eventRegistration1 = new EventRegistration();
   eventRegistration1.EmailAddress = 'email1@example.com';
   eventRegistration1.PhoneNumber = '+971501111111';
-  eventRegistration1.EventItem = sampleEventItemWithRegistrations;
 
   const eventRegistration2 = new EventRegistration();
   eventRegistration2.EmailAddress = 'email2@example.com';
   eventRegistration2.PhoneNumber = '+971502222222';
-  eventRegistration2.EventItem = sampleEventItemWithRegistrations;
 
   sampleEventItemWithRegistrations.EventRegistrations = [eventRegistration1, eventRegistration2];
 };
@@ -151,10 +149,10 @@ describe('Repository', () => {
     expect(eventRegistrations.items.length).toBe(2);
     expect(eventRegistrations.items[0].EventRegistrationId.length).toBeGreaterThan(0);
     expect(eventRegistrations.items[0].EmailAddress).toBe(sampleEventItemWithRegistrations.EventRegistrations![0].EmailAddress);
-    expect(eventRegistrations.items[0].EventItemId).toBe(sampleEventItemWithRegistrations.EventItemId);
+    expect(eventRegistrations.items[0].EventItemId).toBe(eventItems.items[0].EventItemId);
     expect(eventRegistrations.items[1].EventRegistrationId.length).toBeGreaterThan(0);
     expect(eventRegistrations.items[1].EmailAddress).toBe(sampleEventItemWithRegistrations.EventRegistrations![1].EmailAddress);
-    expect(eventRegistrations.items[1].EventItemId).toBe(sampleEventItemWithRegistrations.EventItemId);
+    expect(eventRegistrations.items[1].EventItemId).toBe(eventItems.items[0].EventItemId);
   });
 
   test('add() existing item in database should throw error', async () => {
@@ -195,6 +193,31 @@ describe('Repository', () => {
     expect(updatedItem).toBeDefined();
     expect(updatedItem!.EventItemId).toBe(id);
     expect(updatedItem!.Title).toBe(newTitle);
+  });
+
+  test('update() with DateCreated override', async () => {
+    const eventItemsRepository = new Repository<EventItem, string>(EventItem, entityManager);
+
+    const savedItem = await eventItemsRepository.add(sampleMultipleEventItems[0]);
+
+    expect(savedItem.Title).toBe(sampleMultipleEventItems[0].Title);
+
+    const id = savedItem.EventItemId;
+
+    const newTitle = 'Updated Title';
+    savedItem.Title = newTitle;
+
+    const savedDateCreated = savedItem.DateCreated;
+    savedItem.DateCreated = new Date('2019-01-02');
+
+    await eventItemsRepository.update(savedItem);
+
+    const updatedItem = await eventItemsRepository.getById(id);
+
+    expect(updatedItem).toBeDefined();
+    expect(updatedItem!.EventItemId).toBe(id);
+    expect(updatedItem!.Title).toBe(newTitle);
+    expect(updatedItem!.DateCreated.toISOString()).toBe(savedDateCreated.toISOString());
   });
 
   test('update() with optimistic concurrency error', async () => {

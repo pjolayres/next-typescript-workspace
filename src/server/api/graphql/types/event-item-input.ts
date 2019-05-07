@@ -1,9 +1,15 @@
-import { ObjectType, Field, GraphQLISODateTime, Float } from 'type-graphql';
+import { InputType, Field, GraphQLISODateTime, Float, ID, Int } from 'type-graphql';
+import { DeepPartial } from 'typeorm';
 
 import EventItem from '../../../entities/event-item';
 
-@ObjectType()
-export default class EventItemInput implements Partial<EventItem> {
+import EventRegistrationInput from './event-registration-input';
+
+@InputType()
+export default class EventItemInput implements DeepPartial<EventItem> {
+  @Field(_type => ID, { nullable: true })
+  EventItemId!: string;
+
   @Field(_type => GraphQLISODateTime)
   StartDate!: Date;
 
@@ -28,6 +34,18 @@ export default class EventItemInput implements Partial<EventItem> {
   @Field(_type => Float, { nullable: true })
   Longitude?: number;
 
+  @Field(_type => [EventRegistrationInput], { nullable: true })
+  EventRegistrations?: EventRegistrationInput[];
+
   @Field({ nullable: true })
   Remarks?: string;
+
+  @Field(_type => GraphQLISODateTime, { nullable: true })
+  DateCreated!: Date;
+
+  @Field(_type => GraphQLISODateTime, { nullable: true })
+  DateModified!: Date;
+
+  @Field(_type => Int, { nullable: true })
+  Timestamp!: string;
 }
