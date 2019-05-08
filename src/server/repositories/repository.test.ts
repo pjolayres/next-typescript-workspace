@@ -228,13 +228,18 @@ describe('Repository', () => {
 
     expect(savedItem.Title).toBe(sampleTwinEventItem1.Title);
 
+    // Get another copy of saved item
+    const savedItemCopy = await eventItemsRepository.getById(savedItem.EventItemId);
+
+    expect(savedItemCopy!.EventItemId).toBe(savedItem.EventItemId);
+
     // Update item concurrently
     const newTitle1 = 'Updated Title 1';
-    sampleTwinEventItem2.EventItemId = savedItem.EventItemId;
-    sampleTwinEventItem2.Title = newTitle1;
-    sampleTwinEventItem2.Timestamp = savedItem.Timestamp;
+    savedItemCopy!.EventItemId = savedItem.EventItemId;
+    savedItemCopy!.Title = newTitle1;
+    savedItemCopy!.Timestamp = savedItem.Timestamp;
 
-    const concurrentlyUpdatedItem = await eventItemsRepository.update(sampleTwinEventItem2);
+    const concurrentlyUpdatedItem = await eventItemsRepository.update(savedItemCopy!);
 
     expect(concurrentlyUpdatedItem!.EventItemId).toBe(savedItem.EventItemId);
     expect(concurrentlyUpdatedItem!.Title).toBe(newTitle1);
@@ -247,8 +252,7 @@ describe('Repository', () => {
     let error: ValidationError | undefined | null = null;
     try {
       await eventItemsRepository.update(savedItem);
-    }
-    catch (ex) {
+    } catch (ex) {
       error = ex as ValidationError;
     }
 

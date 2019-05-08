@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, GraphQLISODateTime, ID, Int } from 'type-graphql';
-import { IsUUID, IsEmail, Matches, MaxLength, IsDate, IsNumberString } from 'class-validator';
+import { IsUUID, IsEmail, Matches, MaxLength, IsDate, IsOptional, Min } from 'class-validator';
 
 import EventItem from './event-item';
 
@@ -31,11 +31,13 @@ export default class EventRegistration {
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
   @Matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)
+  @IsOptional()
   PhoneNumber?: string;
 
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
   @MaxLength(2000)
+  @IsOptional()
   Remarks?: string;
 
   @CreateDateColumn()
@@ -50,6 +52,6 @@ export default class EventRegistration {
 
   @VersionColumn()
   @Field(_type => Int)
-  @IsNumberString()
-  Timestamp!: string;
+  @Min(1)
+  Timestamp!: number;
 }

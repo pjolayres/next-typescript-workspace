@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, OneToMany } from 'typeorm';
 import { ObjectType, Field, GraphQLISODateTime, Float, ID, Int } from 'type-graphql';
-import { IsUUID, MaxLength, Min, Max, IsDate, IsNumberString } from 'class-validator';
+import { IsUUID, MaxLength, Min, Max, IsDate, IsOptional } from 'class-validator';
 
 import EventRegistration from './event-registration';
 
@@ -20,6 +20,7 @@ export default class EventItem {
   @Column({ nullable: true })
   @Field(_type => GraphQLISODateTime, { nullable: true })
   @IsDate()
+  @IsOptional()
   EndDate?: Date;
 
   @Column('nvarchar', { length: 2000 })
@@ -30,27 +31,32 @@ export default class EventItem {
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
   @MaxLength(2000)
+  @IsOptional()
   Summary?: string;
 
   @Column('text', { nullable: true })
   @Field({ nullable: true })
+  @IsOptional()
   Body?: string;
 
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
   @MaxLength(2000)
+  @IsOptional()
   Address?: string;
 
   @Column('double', { nullable: true })
   @Field(_type => Float, { nullable: true })
   @Min(-90.0)
   @Max(90.0)
+  @IsOptional()
   Latitude?: number;
 
   @Column('double', { nullable: true })
   @Field(_type => Float, { nullable: true })
   @Min(-180.0)
   @Max(180.0)
+  @IsOptional()
   Longitude?: number;
 
   @OneToMany(_type => EventRegistration, item => item.EventItem, { cascade: true })
@@ -60,6 +66,7 @@ export default class EventItem {
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
   @MaxLength(2000)
+  @IsOptional()
   Remarks?: string;
 
   @CreateDateColumn()
@@ -74,6 +81,6 @@ export default class EventItem {
 
   @VersionColumn()
   @Field(_type => Int)
-  @IsNumberString()
-  Timestamp!: string;
+  @Min(1)
+  Timestamp!: number;
 }
