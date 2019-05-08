@@ -1,4 +1,4 @@
-import { FetchListOptions, SearchableEntityProperties, PaginatedFetchListOptions } from '../../types';
+import { FetchListOptions, SearchableEntityProperties, PaginatedFetchListOptions } from '../types';
 
 const Utilities = {
   cleanSplit: (text: string | null | undefined, delimiter: string = ',', trim: boolean = true) => {

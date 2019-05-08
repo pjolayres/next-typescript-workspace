@@ -13,7 +13,7 @@ logger.info('☕️  Initializing server');
 
 const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
-const server = nextServer({ dir: './src', dev });
+const server = nextServer({ dir: './src/client', dev });
 
 server.prepare().then(async () => {
   const app = express();

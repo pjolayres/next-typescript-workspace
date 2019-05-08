@@ -4,7 +4,7 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import axios, { AxiosRequestConfig, CancelToken } from 'axios';
 
-import { withNamespaces, Link } from '../../shared/localization';
+import { withNamespaces, Link } from '../../../shared/localization';
 import { LocalizedNextFunctionComponent, LocalizedProps } from '../../../types';
 import { ReduxState } from '../../state/types';
 import { setName, logout } from '../../state/user-data/actions';

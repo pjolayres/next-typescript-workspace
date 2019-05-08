@@ -3,7 +3,7 @@ import { Connection, EntityManager } from 'typeorm';
 import databaseInitializer from '../config/database-initializer';
 import EventItem from '../entities/event-item';
 import EventRegistration from '../entities/event-registration';
-import { SearchableEntityProperties } from '../../../types';
+import { SearchableEntityProperties } from '../../types';
 import { ValidationError, ValidationErrorCodes, MiscellaneousErrorCodes } from '../../shared/errors';
 
 import Repository from './repository';

@@ -4,7 +4,7 @@ import { Store, AnyAction } from 'redux';
 import { Provider } from 'react-redux';
 import { Persistor } from 'redux-persist';
 
-import { appWithTranslation } from '../shared/localization';
+import { appWithTranslation } from '../../shared/localization';
 import { ReduxState } from '../state/types';
 import withRedux from '../components/with-redux';
 

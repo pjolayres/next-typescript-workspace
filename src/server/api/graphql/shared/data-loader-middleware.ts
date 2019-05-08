@@ -1,6 +1,6 @@
 import { MiddlewareFn } from 'type-graphql';
 
-import { Context } from '../../../../../types';
+import { Context } from '../../../../types';
 
 import DataLoaderFactory from './data-loader-factory';
 

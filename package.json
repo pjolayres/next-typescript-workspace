@@ -6,7 +6,7 @@
     "dev": "npm run clean && concurrently \"npm run dev:server\" \"npm run dev:start\"",
     "dev:server": "tsc --project './tsconfig.server.json' --watch --preserveWatchOutput --outDir './dist'",
     "dev:start": "wait-on ./dist/server/index.js && NODE_ENV=${NODE_ENV:-development} nodemon --watch ./dist/server ${NODE_INSPECT:=--inspect} --verbose server.js",
-    "build": "npm run clean && BUNDLE_ANALYZE=both next build ./src && npm run build:server",
+    "build": "npm run clean && BUNDLE_ANALYZE=both next build ./src/client && npm run build:server",
     "build:server": "tsc --project './tsconfig.server.json' --outDir './dist'",
     "lint": "tslint --project tsconfig.json && tsc && tslint --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --check **/*.ts",
     "lint:fix": "tslint --fix --project tsconfig.json && tsc && tslint --fix --project tsconfig.server.json && tsc --project tsconfig.server.json --noEmit && prettier --write **/*.ts",

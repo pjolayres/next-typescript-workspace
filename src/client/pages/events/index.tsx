@@ -4,10 +4,10 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import axios, { AxiosRequestConfig, CancelToken } from 'axios';
 
-import { withNamespaces } from '../../shared/localization';
+import { withNamespaces } from '../../../shared/localization';
 import { LocalizedNextFunctionComponent, LocalizedProps, ListData } from '../../../types';
 import { ReduxState } from '../../state/types';
-import EventItem from '../../server/entities/event-item';
+import EventItem from '../../../server/entities/event-item';
 
 import './style.scss';
 

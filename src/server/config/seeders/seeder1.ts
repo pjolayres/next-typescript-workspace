@@ -15,7 +15,9 @@ const seeder1 = async (entityManager: EntityManager, databaseMetadata: DatabaseM
   logger.info('Seeding database [1].');
 
   const earliestStartDate = moment().add(1, 'week');
-  const latestStartDate = moment().add(1, 'week').add(1, 'year');
+  const latestStartDate = moment()
+    .add(1, 'week')
+    .add(1, 'year');
 
   const events = [];
   for (let i = 0; i < 20; i++) {
@@ -64,7 +66,6 @@ const seeder1 = async (entityManager: EntityManager, databaseMetadata: DatabaseM
   for (const event of events) {
     await entityManager.save(event);
   }
-
 
   databaseMetadata.Version = 1;
 

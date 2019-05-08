@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import Head from '../components/head';
 import Nav from '../components/nav';
-import { withNamespaces } from '../shared/localization';
+import { withNamespaces } from '../../shared/localization';
 import { LocalizedNextFunctionComponent } from '../../types';
 
 export const Home: LocalizedNextFunctionComponent = props => {

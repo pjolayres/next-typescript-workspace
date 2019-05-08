@@ -1,7 +1,7 @@
 import { ArgsType, Field, Int } from 'type-graphql';
 
 @ArgsType()
-export default class FetchListArgs  {
+export default class FetchListArgs {
   @Field(_type => Int, { nullable: true })
   skip?: number;
 

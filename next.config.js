@@ -3,7 +3,7 @@ const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 
 const config = {
-  distDir: '../dist/next',
+  distDir: '../../dist/next',
   webpack: config => {
     // Fixes npm packages that depend on `fs` module
     config.node = {

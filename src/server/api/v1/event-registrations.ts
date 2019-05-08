@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 
 import EventRegistration from '../../entities/event-registration';
-import { ApiListResponse } from '../../../../types';
+import { ApiListResponse } from '../../../types';
 import Repository from '../../repositories/repository';
 import Utilities from '../../../shared/utilities';
 import { NotImplementedError, MiscellaneousErrorCodes } from '../../../shared/errors';

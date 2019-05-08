@@ -1,6 +1,6 @@
 import { Express, Request, Response } from 'express';
 
-import { ApiResponse } from '../../../../types';
+import { ApiResponse } from '../../../types';
 
 import errorHandler from './error-handler';
 

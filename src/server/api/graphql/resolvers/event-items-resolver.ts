@@ -5,7 +5,7 @@ import FetchListArgs from '../types/fetch-list-args';
 import EventItemInput from '../types/event-item-input';
 import Utilities from '../../../../shared/utilities';
 import EventRegistration from '../../../entities/event-registration';
-import { Context } from '../../../../../types';
+import { Context } from '../../../../types';
 import EventItemsRepository from '../../../repositories/event-items-repository';
 import EventRegistrationsRepository from '../../../repositories/event-registrations-repository';
 

@@ -7,8 +7,7 @@ const transactionScope = async (callback: (transactionManager: EntityManager) =>
 
   if (manager.queryRunner && manager.queryRunner.isTransactionActive) {
     await callback(manager);
-  }
-  else {
+  } else {
     await manager.transaction(async trxManager => {
       await callback(trxManager);
     });

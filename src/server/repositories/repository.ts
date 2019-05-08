@@ -1,7 +1,7 @@
 import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID, DeepPartial } from 'typeorm';
 import { validate } from 'class-validator';
 
-import { ListData, FetchListOptions, PaginatedFetchListOptions } from '../../../types';
+import { ListData, FetchListOptions, PaginatedFetchListOptions } from '../../types';
 import Utilities from '../../shared/utilities';
 import { NotImplementedError, ValidationError, ValidationErrorCodes, MiscellaneousErrorCodes } from '../../shared/errors';
 import transactionScope from '../shared/transaction-scope';

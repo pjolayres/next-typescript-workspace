@@ -47,5 +47,5 @@ export default class EventItemInput implements DeepPartial<EventItem> {
   DateModified!: Date;
 
   @Field(_type => Int, { nullable: true })
-  Timestamp!: string;
+  Timestamp!: number;
 }

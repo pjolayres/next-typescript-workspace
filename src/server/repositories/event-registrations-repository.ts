@@ -1,7 +1,7 @@
 import { FindOperator } from 'typeorm';
 
 import EventRegistration from '../entities/event-registration';
-import { FetchListOptions } from '../../../types';
+import { FetchListOptions } from '../../types';
 
 import Repository from './repository';
 

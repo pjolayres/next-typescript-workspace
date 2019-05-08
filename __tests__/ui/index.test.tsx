@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import { Home } from '../../src/pages';
+import { Home } from '../../src/client/pages';
 
 // jest.mock('found/lib/Link', () => 'link');
 
