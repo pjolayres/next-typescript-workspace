@@ -1,4 +1,5 @@
 import { EntityManager, getManager, ObjectType, FindManyOptions, FindConditions, FindOperator, ObjectID, DeepPartial } from 'typeorm';
+import { validate } from 'class-validator';
 
 import { ListData, FetchListOptions, PaginatedFetchListOptions } from '../../../types';
 import Utilities from '../../shared/utilities';
@@ -137,6 +138,11 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     const repository = this.manager.getRepository(this.type);
     const entity: TEntity = repository.create(item);
 
+    const errors = await validate(entity, { skipMissingProperties: true, validationError: { target: false } });
+    if (errors.length > 0) {
+      throw new ValidationError('', ValidationErrorCodes.ValidationError, errors);
+    }
+
     if (repository.hasId(entity)) {
       throw new ValidationError('', ValidationErrorCodes.InsertExistingItemError);
     }
@@ -150,6 +156,11 @@ export default class Repository<TEntity, TPrimaryKey = string | number | Date | 
     const repository = this.manager.getRepository(this.type);
     const entity: TEntity = repository.create(item);
     const id = repository.getId(entity);
+
+    const errors = await validate(entity, { validationError: { target: false } });
+    if (errors.length > 0) {
+      throw new ValidationError('', ValidationErrorCodes.ValidationError, errors);
+    }
 
     const typeMetadata = this.manager.connection.getMetadata(this.type);
     const primaryColumn = typeMetadata.columns.find(column => column.isPrimary);

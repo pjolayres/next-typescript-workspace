@@ -56,12 +56,14 @@ export class NotAuthorizedError extends Error implements CustomError {
 
 export class ValidationError extends Error implements CustomError {
   errorCode: number;
+  validationErrors: any;
 
-  constructor(message: string | undefined, errorCode?: number) {
+  constructor(message: string | undefined, errorCode?: number, validationErrors?: any) {
     super(message);
 
     this.name = this.constructor.name;
     this.errorCode = errorCode || ErrorCodes.ValidationError;
+    this.validationErrors = validationErrors;
     Error.captureStackTrace(this, ValidationError);
   }
 }

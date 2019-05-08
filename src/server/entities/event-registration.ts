@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ObjectType, Field, GraphQLISODateTime, ID, Int } from 'type-graphql';
+import { IsUUID, IsEmail, Matches, MaxLength, IsDate, IsNumberString } from 'class-validator';
 
 import EventItem from './event-item';
 
@@ -8,10 +9,12 @@ import EventItem from './event-item';
 export default class EventRegistration {
   @PrimaryGeneratedColumn('uuid')
   @Field(_type => ID)
+  @IsUUID('4')
   EventRegistrationId!: string;
 
   @Column()
   @Field()
+  @IsUUID('4')
   EventItemId!: string;
 
   @ManyToOne(_type => EventItem, item => item.EventRegistrations)
@@ -21,25 +24,32 @@ export default class EventRegistration {
 
   @Column('nvarchar', { length: 2000 })
   @Field()
+  @IsEmail()
+  @MaxLength(2000)
   EmailAddress!: string;
 
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
+  @Matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)
   PhoneNumber?: string;
 
   @Column('nvarchar', { length: 2000, nullable: true })
   @Field({ nullable: true })
+  @MaxLength(2000)
   Remarks?: string;
 
   @CreateDateColumn()
   @Field(_type => GraphQLISODateTime)
+  @IsDate()
   DateCreated!: Date;
 
   @UpdateDateColumn()
   @Field(_type => GraphQLISODateTime)
+  @IsDate()
   DateModified!: Date;
 
   @VersionColumn()
   @Field(_type => Int)
+  @IsNumberString()
   Timestamp!: string;
 }
