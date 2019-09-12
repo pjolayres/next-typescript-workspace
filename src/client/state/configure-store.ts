@@ -5,7 +5,7 @@ import { persistStore, persistReducer, PersistConfig, Persistor } from 'redux-pe
 import storage from 'redux-persist/lib/storage';
 
 import reducers from './reducers';
-import { ReduxState } from './types';
+import { ReduxState, RawState } from './types';
 
 declare var process: {
   env: {
@@ -21,13 +21,13 @@ if (!isServer && process.env.NODE_ENV !== 'test') {
   middleware.push(logger);
 }
 
-const persistConfig: PersistConfig = {
+const persistConfig: PersistConfig<RawState> = {
   key: 'app-state-v1',
   storage,
   whitelist: ['userData']
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer<RawState>(persistConfig, reducers);
 
 export interface StoreConfig {
   store: Store<ReduxState, AnyAction>;

@@ -1,9 +1,13 @@
 import { PersistedState } from 'redux-persist';
 
-import reducer from './reducers';
-import { UserDataActionTypes } from './user-data/types';
-import { AppDataActionTypes } from './app-data/types';
+import { UserDataActionTypes, UserDataState } from './user-data/types';
+import { AppDataActionTypes, AppDataState } from './app-data/types';
 
-export type ReduxState = ReturnType<typeof reducer> & PersistedState;
+export interface RawState {
+  userData: UserDataState;
+  appData: AppDataState;
+}
+
+export type ReduxState = RawState & PersistedState;
 
 export type ActionTypes = UserDataActionTypes | AppDataActionTypes;
