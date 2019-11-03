@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 import Head from '../components/head';
 import Nav from '../components/nav';
-import { withNamespaces } from '../../shared/localization';
-import { LocalizedNextFunctionComponent } from '../../types';
+import { withTranslation } from '../../shared/localization';
+import { LocalizedNextPage, LocalizedProps } from '../../types';
 
-export const Home: LocalizedNextFunctionComponent = props => {
+export const Home: LocalizedNextPage<LocalizedProps> = (props: LocalizedProps) => {
   const { t } = props;
 
   return (
@@ -94,8 +94,8 @@ export const Home: LocalizedNextFunctionComponent = props => {
   );
 };
 
-Home.getInitialProps = () => ({
+Home.getInitialProps = async () => ({
   namespacesRequired: ['common']
 });
 
-export default withNamespaces('common')(Home);
+export default withTranslation('common')(Home);

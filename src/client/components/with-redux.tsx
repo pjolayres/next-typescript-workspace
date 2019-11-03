@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Store, AnyAction } from 'redux';
-import { DefaultAppIProps, AppProps } from 'next/app';
+import { AppInitialProps, AppProps } from 'next/app';
 import { Persistor } from 'redux-persist';
 
 import configureStore, { StoreConfig } from '../state/configure-store';
@@ -65,7 +65,7 @@ export default (App: typeof MyApp) => {
     }
 
     render() {
-      return <App {...this.props as DefaultAppIProps & AppProps} reduxStore={this.reduxStore} reduxPersistor={this.reduxPersistor} />;
+      return <App {...this.props as AppInitialProps & AppProps} reduxStore={this.reduxStore} reduxPersistor={this.reduxPersistor} />;
     }
   };
 };

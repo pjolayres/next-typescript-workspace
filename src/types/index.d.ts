@@ -1,12 +1,13 @@
-import { NextFunctionComponent } from 'next';
+import { NextPage, NextPageContext } from 'next';
 import App from 'next/app';
 
 import DataLoaderFactory from '../src/server/api/graphql/utilities/data-loader-factory';
+import { FunctionComponent } from 'react';
+import { WithTranslation } from 'next-i18next';
 
 // React props
 
-interface LocalizedProps {
-  t: (key: string) => string;
+interface LocalizedProps extends WithTranslation {
   lng: string;
   namespacesRequired: string[];
 }
@@ -15,7 +16,7 @@ interface LocalizationInitialProps {
   namespacesRequired: string[];
 }
 
-interface LocalizedNextFunctionComponent<P = LocalizedProps, IP = LocalizationInitialProps, C = NextContext> extends NextFunctionComponent<P, IP, C> {}
+interface LocalizedNextPage<P = LocalizedProps, IP = LocalizationInitialProps> extends NextPage<P, IP>, FunctionComponent<P> {}
 
 // Repository types
 

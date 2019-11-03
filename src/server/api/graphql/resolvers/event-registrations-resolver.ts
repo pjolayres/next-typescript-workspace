@@ -13,11 +13,18 @@ import EventRegistrationInput from '../types/event-registration-input';
 export default class EventRegistrationsResolver {
   eventRegistrationsRepository = new EventRegistrationsRepository();
 
+  @Query(_returns => EventRegistration)
+  async eventRegistration(@Arg('id') id: string) {
+    const item = await this.eventRegistrationsRepository.getById(id);
+
+    return item;
+  }
+
   @Query(_returns => [EventRegistration])
   async eventRegistrations(@Args() args: FetchListArgs) {
     const options = Utilities.parsePaginatedFetchListOptions<EventRegistration>(args);
 
-    const items = await this.eventRegistrationsRepository.getItems(options);
+    const { items } = await this.eventRegistrationsRepository.getPaginatedItems(options);
 
     return items;
   }

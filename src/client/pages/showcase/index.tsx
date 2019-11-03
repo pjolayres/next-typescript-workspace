@@ -4,8 +4,8 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import axios, { AxiosRequestConfig, CancelToken } from 'axios';
 
-import { withNamespaces, Link } from '../../../shared/localization';
-import { LocalizedNextFunctionComponent, LocalizedProps } from '../../../types';
+import { withTranslation, Link } from '../../../shared/localization';
+import { LocalizedNextPage, LocalizedProps } from '../../../types';
 import { ReduxState } from '../../state/types';
 import { setName, logout } from '../../state/user-data/actions';
 import { setVersion } from '../../state/app-data/actions';
@@ -38,7 +38,7 @@ const fetchData = async (id: number, cancellationToken?: CancelToken) => {
   return null;
 };
 
-export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
+export const Showcase: LocalizedNextPage<Props> = (props: Props) => {
   const { t, version, name, data, rehydrated } = props;
 
   const [count, setCount] = useState(1);
@@ -76,7 +76,7 @@ export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
       <h2>Version: {version}</h2>
       <button onClick={() => props.setVersion('1.0.1')}>Change version</button>
       <h2>Name: {name}</h2>
-      <button onClick={() => props.setName('Name')}>Change name</button>
+      <button onClick={() => props.setName('Name 2')}>Change name</button>
       <h2>Count: {count}</h2>
       <button onClick={() => setCount(count + 1)}>Increment count</button>
       {user && <h2>User: {user.first_name}</h2>}
@@ -89,7 +89,7 @@ export const Showcase: LocalizedNextFunctionComponent<Props> = props => {
 };
 
 Showcase.getInitialProps = async ({ query }) => {
-  const id = parseInt(query.id || 1, 10);
+  const id = parseInt(query.id as string || '1', 10);
 
   // Fetch user data before rendering in the server
   const result = await fetchData(id);
@@ -129,4 +129,4 @@ const mapDispatchToProps = (dispatch: ThunkDispatch<ReduxState, {}, Action>): Ac
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withNamespaces('common')(Showcase));
+)(withTranslation('common')(Showcase));

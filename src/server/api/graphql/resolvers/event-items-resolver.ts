@@ -11,11 +11,18 @@ import EventRegistrationsRepository from '../../../repositories/event-registrati
 
 @Resolver(_of => EventItem)
 export default class EventItemsResolver {
+  @Query(_returns => EventItem)
+  async eventItem(@Arg('id') id: string) {
+    const item = await new EventItemsRepository().getById(id);
+
+    return item;
+  }
+
   @Query(_returns => [EventItem])
   async eventItems(@Args() args: FetchListArgs) {
     const options = Utilities.parsePaginatedFetchListOptions<EventItem>(args);
 
-    const items = await new EventItemsRepository().getItems(options);
+    const { items } = await new EventItemsRepository().getPaginatedItems(options);
 
     return items;
   }

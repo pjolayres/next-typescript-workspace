@@ -4,8 +4,8 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import axios, { AxiosRequestConfig, CancelToken } from 'axios';
 
-import { withNamespaces } from '../../../shared/localization';
-import { LocalizedNextFunctionComponent, LocalizedProps, ListData } from '../../../types';
+import { withTranslation } from '../../../shared/localization';
+import { LocalizedNextPage, LocalizedProps, ListData } from '../../../types';
 import { ReduxState } from '../../state/types';
 import EventItem from '../../../server/entities/event-item';
 
@@ -26,7 +26,7 @@ const fetchData = async (params: string, cancellationToken?: CancelToken) => {
   return result.data.data as ListData<EventItem>;
 };
 
-export const Events: LocalizedNextFunctionComponent<Props> = props => {
+export const Events: LocalizedNextPage<Props> = (props: Props) => {
   const { initialData } = props;
 
   const [data, setData] = useState(initialData);
@@ -82,4 +82,4 @@ const mapDispatchToProps = (_dispatch: ThunkDispatch<ReduxState, {}, Action>): A
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withNamespaces('common')(Events));
+)(withTranslation('common')(Events));

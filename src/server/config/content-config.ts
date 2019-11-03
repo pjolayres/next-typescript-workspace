@@ -1,8 +1,8 @@
 import onHeaders from 'on-headers';
 import uuid from 'uuid/v4';
 import { Express } from 'express';
-import nextServer from 'next';
 import nextI18NextMiddleware from 'next-i18next/middleware';
+import Server from 'next-server/dist/server/next-server';
 
 import localization from '../../shared/localization';
 import apiv1 from '../api/v1';
@@ -10,7 +10,7 @@ import graphql from '../api/graphql';
 import redirects from '../redirects';
 import ServerUtilities from '../shared/server-utilities';
 
-const contentConfig = async (app: Express, server: nextServer.Server) => {
+const contentConfig = async (app: Express, server: Server) => {
   // Setup redirects
   redirects(app);
 

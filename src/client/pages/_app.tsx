@@ -18,11 +18,9 @@ export class MyApp extends App<ReduxAppProps> {
     const { Component, pageProps, reduxStore } = this.props;
 
     return (
-      <Container>
-        <Provider store={reduxStore}>
-          <Component {...pageProps} />
-        </Provider>
-      </Container>
+      <Provider store={reduxStore}>
+        <Component {...pageProps} />
+      </Provider>
     );
   }
 }

@@ -152,6 +152,7 @@ This will ensure that the test execution environment has all the required tools 
 ## Notes
 1. Redux is always initialized to the default state when being rendered in the server. After the client's initial render, the state is then rehydrated from localStorate which triggers an update to dependent components.
 1. The application is using redux-persist is being used without the need for `<PersistGate />`. Since server-side rendering means loaded pages will have preliminary data in them, it is better to render the page without the artificial blocking that `PersistGate` provides.
+1. GraphQL-based queries use [dataloader](https://www.npmjs.com/package/dataloader) to resolve child or subqueries in one database query.
 
 ## Issues
 1. Using Next.js `<Link prefetch />` does not work when running through **Jest** and **react-test-renderer**.

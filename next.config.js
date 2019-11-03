@@ -1,5 +1,4 @@
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
-const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 
 const config = {
@@ -28,4 +27,4 @@ const config = {
   }
 };
 
-module.exports = withBundleAnalyzer(withTypescript(withSass(config)));
+module.exports = withBundleAnalyzer(withSass(config));
