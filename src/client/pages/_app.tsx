@@ -1,5 +1,5 @@
 import React from 'react';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import { Store, AnyAction } from 'redux';
 import { Provider } from 'react-redux';
 import { Persistor } from 'redux-persist';

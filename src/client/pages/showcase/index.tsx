@@ -4,7 +4,7 @@ import { Action } from 'redux';
 import { connect } from 'react-redux';
 import axios, { AxiosRequestConfig, CancelToken } from 'axios';
 
-import { withTranslation, Link } from '../../../shared/localization';
+import { withTranslation, Link, i18n } from '../../../shared/localization';
 import { LocalizedNextPage, LocalizedProps } from '../../../types';
 import { ReduxState } from '../../state/types';
 import { setName, logout } from '../../state/user-data/actions';
@@ -83,13 +83,17 @@ export const Showcase: LocalizedNextPage<Props> = (props: Props) => {
       <Link href="/">
         <a>Go to homepage</a>
       </Link>
+      <br />
+      <button type="button" onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'ar' : 'en')}>
+        {t('ChangeLanguage')}
+      </button>
       {!rehydrated && <h1>Loading...</h1>}
     </div>
   );
 };
 
 Showcase.getInitialProps = async ({ query }) => {
-  const id = parseInt(query.id as string || '1', 10);
+  const id = parseInt((query.id as string) || '1', 10);
 
   // Fetch user data before rendering in the server
   const result = await fetchData(id);

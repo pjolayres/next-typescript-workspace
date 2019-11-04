@@ -15,7 +15,8 @@ const port = parseInt(process.env.PORT as string, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const server = nextServer({ dir: './src/client', dev });
 
-server.prepare().then(async () => {
+(async () => {
+  await server.prepare();
   const app = express();
 
   app.get('/health', (_req, res) => {
@@ -44,4 +45,4 @@ server.prepare().then(async () => {
 
     logger.info(`📡  The server is ready (http://localhost:${port}/)`);
   });
-});
+})();

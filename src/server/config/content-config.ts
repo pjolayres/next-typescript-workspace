@@ -1,8 +1,8 @@
 import onHeaders from 'on-headers';
 import uuid from 'uuid/v4';
-import { Express } from 'express';
+import express, { Express } from 'express';
 import nextI18NextMiddleware from 'next-i18next/middleware';
-import Server from 'next-server/dist/server/next-server';
+import Server from 'next/dist/next-server/server/next-server';
 
 import localization from '../../shared/localization';
 import apiv1 from '../api/v1';
@@ -39,9 +39,9 @@ const contentConfig = async (app: Express, server: Server) => {
 
   app.get('/data/:id', (req, res) => server.render(req, res, '/data', { id: req.params.id }));
 
-  app.use(nextI18NextMiddleware(localization));
+  app.use('/src/client/public/locales', express.static('src/client/public/locales'));
 
-  // nextI18NextMiddleware(localization, server, app);
+  app.use(nextI18NextMiddleware(localization));
 
   app.get('*', (req, res) => handle(req, res));
 };
